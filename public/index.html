@@ -1,65 +1,138 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Makassar Robotics</title>
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/7.9.1/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/7.9.1/firebase-auth.js"></script>
-    <script defer src="/__/firebase/7.9.1/firebase-database.js"></script>
-    <script defer src="/__/firebase/7.9.1/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/7.9.1/firebase-storage.js"></script>
-    <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
 
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
+  <script defer src="/__/firebase/7.9.1/firebase-app.js"></script>  
+  <script defer src="/__/firebase/7.9.1/firebase-database.js"></script>
+  <script defer src="/__/firebase/init.js"></script>
+  <nav class="light-blue darken-3" role="navigation">
+    <div class="nav-wrapper container">
+     
+      <a id="logo-container" href="#" class="brand-logo">
+
+      <div class="hide-on-med-and-up">MksRobotics</div>
+      <div class="hide-on-small-only">Makassar Robotics</div>
+      </a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#">Coming Soon</a></li>
+      </ul>
+
+      <ul id="nav-mobile" class="sidenav">
+        <li><a href="#">Coming Soon</a></li>
+      </ul>
+      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
     </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
+  </nav>
+  <div class="section no-pad-bot" id="index-banner">
+    
+  </div>
+  <div class="row">
+    <div class="col s12 m3 l2 offset-l1">     
+      <div class="card">
+        <div class="card-content">         
+          <span class="card-title">Kategori</span>            
+          <div class="row" style="margin-bottom: 0px;">
+            <div class="input-field col s12">
+              <div class="center" id="categoryLoad">
+                <div class="preloader-wrapper big active">
+                  <div class="spinner-layer spinner-blue-only">
+                    <div class="circle-clipper left">
+                      <div class="circle"></div>
+                    </div><div class="gap-patch">
+                      <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                      <div class="circle"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+                
+              <form action="#" id="categoryDiv">
+                
+              </form>
+            </div>
+          </div>
+          
+        </div>
+      </div>      
+    </div>
+    <div class="col s12 m9">
+      <h4 class="blue-text text-darken-3">Produk</h4>
+      <div class="divider"></div>
+      <div class="progress" id="productLoad">
+          <div class="indeterminate blue"></div>
+      </div>
+      <br>
+      <div class="row">
+        <div id="productDiv"></div>
+      </div>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+        <div class="row">
+          <div class="col s12">
+            <ul class="center pagination">
+              <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+              <li class="blue darken-1 active"><a href="#!">1</a></li>
+              <li class="waves-effect"><a href="#!">2</a></li>
+              <li class="waves-effect"><a href="#!">3</a></li>
+              <li class="waves-effect"><a href="#!">4</a></li>
+              <li class="waves-effect"><a href="#!">5</a></li>
+              <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+            </ul>        
+          </div>
+        </div>
+      </div>
+    </div>
+  <footer class="page-footer blue accent-2">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Tentang Kami</h5>
+          <div class="row valign-wrapper">
+            <div class="col s2">
+              <img src="img/logo.png" alt="" class="circle responsive-img white" style="padding: 5px;"> <!-- notice the "circle" class -->
+            </div>
+            <div class="col s10">
+              <p class="grey-text text-lighten-4"> <b>Makassar Robotics</b>  <br>
+                <small>Distributor Modul Elektronika</small>
+              </p>                        
+            </div>           
+          </div>          
+          <p class="grey-text text-lighten-4">Jl. Toddopuli 5 stp. 1 no. 5, Kota Makassar, Sulawesi Selatan <br>
+            <i><small> "Build Your Innovation"</small></i></p>
+          <p class="grey-text text-lighten-4"></p>
+        </div>        
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      Made by <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+      </div>
+    </div>
+  </footer>
 
-        try {
-          let app = firebase.app();
-          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-          document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
-        }
-      });
-    </script>
+
+  <!--  Scripts-->
+  
+
+  <!-- <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script> -->
+
+  <script src="js/jquery-3.4.1.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+
+  
+
+ 
+
   </body>
 </html>
