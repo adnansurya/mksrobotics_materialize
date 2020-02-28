@@ -11,7 +11,7 @@ $( document ).ready(function() {
 
   const db = firebase.database()
   let totalProduct, totalPage, lastUpdated;
-  let category;
+  let category = 'SEMUA';
   let currentPage = 1;
   let perPage = parseInt( $('#itemPerPage').val());
 
@@ -44,6 +44,7 @@ $( document ).ready(function() {
       loadProduct();
     }); 
     $('#webCategory input').on('change', function() {
+      category = $('input[name=category]:checked', '#webCategory').val();
       currentPage = 1;
       loadProduct();
    });
@@ -72,7 +73,7 @@ $( document ).ready(function() {
 
 
   function loadProduct(){
-    category = $('input[name=category]:checked', '#webCategory').val();
+    
     perPage = parseInt($('#itemPerPage').val());
     
     
@@ -160,8 +161,9 @@ $( document ).ready(function() {
   }
 
   $('#mobileProductFilterBtn').on('click', function(){
-    let selectedCategory = $('input[name=category]:checked', '#mobileCategory').val()
-    loadProduct(selectedCategory);
+    category = $('input[name=category]:checked', '#mobileCategory').val()
+    currentPage = 1;
+    loadProduct();
   });
 
   function loadPagination(total, current){
