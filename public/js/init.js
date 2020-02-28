@@ -31,17 +31,17 @@ $( document ).ready(function() {
 
       $('#productDiv').append(
         `<div class="col l3 m4 s6">
-          <div class="card">
+          <div class="card hoverable">
             <div class="card-image">
-              <img src="img/logo.png" alt="" class="responsive-img" style="padding: 10px;">              
+              <img src="img/logo.png" alt="" class="responsive-img" style="padding: 10px;">                                                   
             </div>
             <div class="card-content" style="padding: 10px;">        
-              <p>
-                <b>`+ data.name+`</b>
+              <p class="truncate">
+               `+ data.name+`
               </p>
               <p>Rp.`+ data.sellPrice+`<small>/ `+ data.unit+`</small></p>
-              <p></p>
-            </div>
+              <p class="right-align">Stok :<b> `+data.stockAmount+`</b></p>  
+            </div>           
           </div>
         </div>`
       );
