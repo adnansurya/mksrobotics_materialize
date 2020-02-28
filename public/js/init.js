@@ -1,8 +1,6 @@
 
 
 $( document ).ready(function() {
-  console.log( "ready!" );
-
   $('.sidenav').sidenav();
   $('select').formSelect();
   $('.fixed-action-btn').floatingActionButton();
@@ -111,7 +109,6 @@ $( document ).ready(function() {
     let endItem = 0;
     if(category !== 'SEMUA'){
       let totalItem = Object.keys(all).length;
-      console.log(totalItem);
       
       totalPage = Math.floor(totalItem / perPage);
       if(totalItem % perPage !== 0){
@@ -146,15 +143,8 @@ $( document ).ready(function() {
        }
 
       if(category !== 'SEMUA'){
-        return index === endItem;
-        console.log('BUKAN SEMUA');
-        
-      }else{
-        console.log('SEMUA');
-        
-      }
-    
-              
+        return index === endItem;      
+      }         
     });
    
     $('#productLoad').addClass('hide');    
@@ -166,12 +156,12 @@ $( document ).ready(function() {
     loadProduct();
   });
 
-  function loadPagination(total, current){
+  function loadPagination(total){
   
     $('.pageNum').empty();
     let arrowLeft = `<li `; 
   
-    if(current === 1){
+    if(currentPage <= 1){
       arrowLeft += `class="disabled"`;
     }
     arrowLeft += `>
@@ -193,7 +183,7 @@ $( document ).ready(function() {
   
     let arrowRight = `<li `; 
   
-    if(current === total){
+    if(currentPage >= total){
       arrowRight += `class="disabled"`;
     }
     arrowRight += `>
@@ -206,9 +196,28 @@ $( document ).ready(function() {
     
   }
 
-  $('.pageNum').on('click','li', function(){
-    currentPage = parseInt($(this).text());
-    loadProduct();
+  $('.pageNum').on('click','a', function(){
+    let clickedPage = $(this).text()
+    let clickedParent =  $(this).parent('li');
+    let disableStatus = clickedParent.hasClass('disabled');
+
+    if(isNaN(clickedPage)){       
+      if(!disableStatus){       
+        let indicator = $(this).children()[0].innerHTML;
+        if(indicator === 'chevron_right'){
+          currentPage++;
+        }else if(indicator === 'chevron_left'){
+          currentPage--;
+        }
+      }    
+    }else{
+      currentPage = parseInt(clickedPage);
+   
+    }
+  
+    if(!disableStatus){          
+      loadProduct();
+    }   
     
   });
 
