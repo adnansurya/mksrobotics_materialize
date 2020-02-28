@@ -11,8 +11,11 @@ $( document ).ready(function() {
 
   const db = firebase.database()
   let totalProduct, totalPage, lastUpdated;
+  let category;
+  let currentPage = 1;
+  let perPage = parseInt( $('#itemPerPage').val());
 
-  loadProperties(); 
+ 
 
   db.ref('category').once('value').then(function(snapshot){
     $('.categoryDiv').append(
@@ -35,9 +38,14 @@ $( document ).ready(function() {
       );
     });
     $('#categoryLoad').addClass('hide');
+    loadProperties();
+    $('#itemPerPage').on('change', function(){
+      currentPage = 1;
+      loadProduct();
+    }); 
     $('#webCategory input').on('change', function() {
-      let selectedCategory = $('input[name=category]:checked', '#webCategory').val()
-      loadProduct(selectedCategory, 10, 1);
+      currentPage = 1;
+      loadProduct();
    });
   });
 
@@ -47,7 +55,8 @@ $( document ).ready(function() {
       lastUpdated = data.last_sync
       totalProduct = data.product_total        
       $('#lastUpdateTxt').text("Update : " + lastUpdated);
-      loadProduct("SEMUA",10,1);
+      currentPage = 1;
+      loadProduct();
     });
   }
 
@@ -62,23 +71,33 @@ $( document ).ready(function() {
   }
 
 
-  function loadProduct(category, perPage, currentPage){
-
+  function loadProduct(){
+    category = $('input[name=category]:checked', '#webCategory').val();
+    perPage = parseInt($('#itemPerPage').val());
+    
+    
     $('#productLoad').removeClass('hide');
     $('#productDiv').empty();
     let allSnap;
     
     if(category === "SEMUA"){
-      totalPage = Math.round(totalProduct / perPage);
+      // $('#itemPerPage').parent().parent().closest('div').removeClass('hide');
+      totalPage = Math.floor(totalProduct / perPage);
+      
       if(totalProduct % perPage != 0){
         totalPage += 1;
       }
-      console.log(totalPage);
-      db.ref('product_data').orderByKey().startAt('10').limitToFirst(10).once('value').then(function(snapshot){    
+    
+      loadPagination(totalPage);
+      let startItem = perPage * (currentPage-1)
+      startItem = startItem.toString();
+      
+      db.ref('product_data').orderByKey().startAt(startItem).limitToFirst(perPage).once('value').then(function(snapshot){    
         allSnap = clone(snapshot.val());        
         appendProduct(allSnap);            
       });
     }else{
+      // $('#itemPerPage').parent().parent().closest('div').addClass('hide');      
       db.ref('product_data').orderByChild('category').equalTo(category).once('value').then(function(snapshot){    
         allSnap = clone(snapshot.val());        
         appendProduct(allSnap);
@@ -87,9 +106,26 @@ $( document ).ready(function() {
   }
 
   function appendProduct(all){
-
-    Object.keys(all).forEach(function(k) {
-       let data = all[k];
+    let startItem = 0;
+    let endItem = 0;
+    if(category !== 'SEMUA'){
+      let totalItem = Object.keys(all).length;
+      console.log(totalItem);
+      
+      totalPage = Math.floor(totalItem / perPage);
+      if(totalItem % perPage !== 0){
+        totalPage += 1;
+      }
+      loadPagination(totalPage, currentPage);
+      startItem = perPage * (currentPage-1)
+      endItem = startItem + perPage - 1;
+    }
+    
+    
+    Object.keys(all).some(function(value, index, _arr) {
+       let data = all[value];
+       if(category === 'SEMUA' || (category !== 'SEMUA' &&  index>= startItem)){
+       
        $('#productDiv').append(
         `<div class="col l3 m4 s6">
           <div class="card hoverable">
@@ -100,22 +136,83 @@ $( document ).ready(function() {
               <p class="truncate">
                `+ data.name+`
               </p>
-              <p>Rp.`+ data.sellPrice+`<small>/ `+ data.unit+`</small></p>
+              <p>Rp.`+ data.sellPrice+`<small> / `+ data.unit+`</small></p>
               <p class="right-align">Stok :<b> `+data.stockAmount+`</b></p>  
             </div>           
           </div>
         </div>`
       );
-          
+       }
+
+      if(category !== 'SEMUA'){
+        return index === endItem;
+        console.log('BUKAN SEMUA');
+        
+      }else{
+        console.log('SEMUA');
+        
+      }
+    
+              
     });
-    $('#productLoad').addClass('hide');
-  
+   
+    $('#productLoad').addClass('hide');    
+  }
 
+  $('#mobileProductFilterBtn').on('click', function(){
+    let selectedCategory = $('input[name=category]:checked', '#mobileCategory').val()
+    loadProduct(selectedCategory);
   });
-  
 
+  function loadPagination(total, current){
+  
+    $('.pageNum').empty();
+    let arrowLeft = `<li `; 
+  
+    if(current === 1){
+      arrowLeft += `class="disabled"`;
+    }
+    arrowLeft += `>
+                  <a href="#!">
+                    <i class="material-icons">chevron_left</i>
+                  </a>
+                </li>`;
+                
+      
+    let pageNumber = '';
+    for(i=1;i<=total;i++){
+      if(i === currentPage){
+        pageNumber += `<li class="blue darken-1 active">`;
+      }else{
+        pageNumber +=`<li class="waves-effect">`;
+      }
+      pageNumber += `<a href="#!">`+ i + `</a></li>`;    
+    }
+  
+    let arrowRight = `<li `; 
+  
+    if(current === total){
+      arrowRight += `class="disabled"`;
+    }
+    arrowRight += `>
+                  <a href="#!">
+                    <i class="material-icons">chevron_right</i>
+                  </a>
+                </li>`;
+  
+    $('.pageNum').append(arrowLeft+pageNumber+arrowRight);
+    
+  }
+
+  $('.pageNum').on('click','li', function(){
+    currentPage = parseInt($(this).text());
+    loadProduct();
+    
+  });
 
 });
+
+
 
 
 
