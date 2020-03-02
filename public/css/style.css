@@ -12,3 +12,43 @@
 .icon-block .material-icons {
 	font-size: inherit;
 }
+
+.my-responsive-card{
+  width: 100%; 
+  height: 231px; 
+  padding: 5px;
+}
+
+.my-responsive-img{
+  width: 231px; 
+  height:100%;
+}
+
+
+
+@media only screen and (max-width: 992px) {
+  .my-responsive-card{
+    width: 100%; 
+    height: 179px; 
+    padding: 5px;
+  }
+  
+  .my-responsive-img{
+    width: 179px; 
+    height:100%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .my-responsive-card{
+    width: 100%; 
+    height: 159px; 
+    padding: 5px;
+  }
+
+  
+  .my-responsive-img{
+    width: 159px; 
+    height:100%;
+  }
+}

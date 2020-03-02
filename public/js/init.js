@@ -132,7 +132,10 @@ $( document ).ready(function() {
           `<div class="col l3 m4 s6">
             <div class="card hoverable">
               <div class="card-image grey">
-                <img src="img/logo.png" alt="" class="responsive-img materialboxed" data-caption="`+data.name+`" style="padding: 10px;">
+                <div class="valign-wrapper my-responsive-card">
+                 <img src="img/mksrobotics_logo_long.jpg" alt="" class="responsive-img materialboxed" data-caption="`+data.name+`" style="padding: 10px;">
+                </div>
+               
                 <a class="btn-floating halfway-fab waves-effect waves-light green" style="right: 12px;"><i class="material-icons">list</i></a>                                                           
               </div>
               <div class="card-content" style="padding: 10px; margin-top: 8px;">        
