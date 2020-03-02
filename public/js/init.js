@@ -5,9 +5,13 @@ $( document ).ready(function() {
   $('select').formSelect();
   $('.fixed-action-btn').floatingActionButton();
   $('.modal').modal();
+  
 
 
-  const db = firebase.database()
+  const db = firebase.database();
+ 
+
+  
   let totalProduct, totalPage, lastUpdated;
   let category = 'SEMUA';
   let currentPage = 1;
@@ -124,27 +128,29 @@ $( document ).ready(function() {
        let data = all[value];
        if(category === 'SEMUA' || (category !== 'SEMUA' &&  index>= startItem)){
        
-       $('#productDiv').append(
-        `<div class="col l3 m4 s6">
-          <div class="card hoverable">
-            <div class="card-image">
-              <img src="img/logo.png" alt="" class="responsive-img" style="padding: 10px;">                                                   
+        $('#productDiv').append(
+          `<div class="col l3 m4 s6">
+            <div class="card hoverable">
+              <div class="card-image grey">
+                <img src="img/logo.png" alt="" class="responsive-img materialboxed" data-caption="`+data.name+`" style="padding: 10px;">
+                <a class="btn-floating halfway-fab waves-effect waves-light green" style="right: 12px;"><i class="material-icons">list</i></a>                                                           
+              </div>
+              <div class="card-content" style="padding: 10px; margin-top: 8px;">        
+                <p class="truncate">
+                `+ data.name+`
+                </p>
+                <p>Rp.`+ data.sellPrice+`<small> / `+ data.unit+`</small></p>
+                <p class="right-align">Stok :<b> `+data.stockAmount+`</b></p>  
+              </div>           
             </div>
-            <div class="card-content" style="padding: 10px;">        
-              <p class="truncate">
-               `+ data.name+`
-              </p>
-              <p>Rp.`+ data.sellPrice+`<small> / `+ data.unit+`</small></p>
-              <p class="right-align">Stok :<b> `+data.stockAmount+`</b></p>  
-            </div>           
-          </div>
-        </div>`
-      );
+          </div>`
+        );
        }
 
       if(category !== 'SEMUA'){
         return index === endItem;      
-      }         
+      }
+      $('.materialboxed').materialbox();         
     });
    
     $('#productLoad').addClass('hide');    
@@ -222,6 +228,10 @@ $( document ).ready(function() {
   });
 
 });
+
+function toast(pesan){
+  M.toast({html: pesan});
+}
 
 
 

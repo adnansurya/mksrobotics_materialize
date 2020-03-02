@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-  <title>Makassar Robotics</title>
+  <title>Produk | Makassar Robotics</title>
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -13,15 +13,18 @@
 <body>
 
   <script defer src="/__/firebase/7.9.1/firebase-app.js"></script>  
+  <script defer src="/__/firebase/7.9.1/firebase-auth.js"></script>  
   <script defer src="/__/firebase/7.9.1/firebase-database.js"></script>
   <script defer src="/__/firebase/init.js"></script>
+
   <nav class="light-blue darken-3" role="navigation">
-    <div class="nav-wrapper container">
+    <div class="nav-wrapper">
      
       <a id="logo-container" href="#" class="brand-logo">
-
+        
       <div class="hide-on-med-and-up">MksRobotics</div>
-      <div class="hide-on-small-only">Makassar Robotics</div>
+      <div class="hide-on-large-only hide-on-small-only">Makassar Robotics</div>
+      <div class="hide-on-med-and-down" style="margin-left: 100px;">Makassar Robotics</div>
       </a>
       <ul class="right hide-on-med-and-down">
         <li><a href="#">Coming Soon</a></li>
@@ -33,9 +36,7 @@
       <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
     </div>
   </nav>
-  <div class="section no-pad-bot" id="index-banner">
-    
-  </div> 
+  <div class="section no-pad-bot" id="index-banner"></div> 
   <div class="row">
     <div class="col s12 m3 l2 offset-l1 hide-on-small-only">     
       <div class="card hoverable">
@@ -66,7 +67,7 @@
       </div>      
     </div>
     <div class="col s12 m9">
-      <h4 class="blue-text text-darken-3">Produk</h4>
+      <h4 class="blue-text text-darken-3">Produk</h4>      
       <div class="divider"></div>
       <div class="progress" id="productLoad">
           <div class="indeterminate blue"></div>
@@ -141,16 +142,10 @@
     </div>
   </div>
 
-  <!--  Scripts-->
-  <!-- <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script> -->
+  <!--  Scripts-->  
 
   <script src="js/jquery-3.4.1.js"></script>
   <script src="js/materialize.js"></script>
   <script src="js/init.js"></script>
-
-  
-
- 
-
   </body>
 </html>
