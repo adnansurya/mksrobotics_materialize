@@ -150,10 +150,11 @@ $( document ).ready(function() {
       if(category !== 'SEMUA'){
         return index === endItem;      
       }
-      $('.materialboxed').materialbox();         
+           
     });
-   
-    $('#productLoad').addClass('hide');    
+    
+    $('#productLoad').addClass('hide'); 
+    $('.materialboxed').materialbox();     
   }
 
   $('#mobileProductFilterBtn').on('click', function(){
