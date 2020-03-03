@@ -1,7 +1,11 @@
 <nav class="light-blue darken-3" role="navigation">
     <div class="nav-wrapper">
      
-      <a id="logo-container" href="#" class="brand-logo">
+      <a id="logo-container" class="brand-logo"
+          <% if(page === 'produk'){%> 
+            href="#" <% } else{ %>
+            href="/" <% } %> 
+         >
 
           <div class="hide-on-med-and-up">MksRobotics</div>
           <div class="hide-on-large-only hide-on-small-only">Makassar Robotics</div>
