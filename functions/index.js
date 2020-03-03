@@ -7,9 +7,16 @@ const app = express();
 const web_name = 'Makassar Robotics';
 
 
-app.use('/static', express.static(path.join(__dirname, 'public')))
+app.use('/static', express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 
+app.get('/', (req,res) => {
+    res.render('pages/product', {page : 'product', web_name : web_name});    
+});
+
+app.get('/login', (req,res) => {
+    res.render('pages/login', {page : 'login', web_name : web_name});    
+});
 
 app.get('/blank', (req,res) => {
     res.render('pages/blank', {page : 'blank', web_name : web_name});    
