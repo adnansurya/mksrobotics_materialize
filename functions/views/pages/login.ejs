@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include ('../partials/head'); %>
+  <title> <%= page.toUpperCase(); %> | <%= web_name %> </title>
+
+  <style>
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto; 
+        width: 80%;           
+    }
+  </style>
+</head>
+<body class="blue">
+
+    <%- include ('../partials/firebase'); %>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m6 offset-m3">
+                <div class="card hoverable" style="margin-top: 150px;">
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col s12">
+                                <div>
+                                    <img src="img/mksrobotics_logo_long.jpg" class="responsive-img" alt="Makassar Robotics">                    
+                                </div>                                                           
+                            </div>                            
+                        </div>
+                        
+                                    
+                        <div class="row">
+                            <div class="col s12">
+                                <span class="card-title">Login</span> 
+                                <form action="">
+                                    <div class="input-field">
+                                        <input type="email" name="email" id="email_txt">
+                                        <label for="email_txt">Email</label>
+                                    </div>
+                                    <div class="input-field">                                
+                                        <input type="password" name="password" id="password_txt">
+                                        <label for="password_txt">Password</label>
+                                    </div>                                                      
+                                </form>
+                                <button id="login_btn" class="btn blue right waves-effect waves-light" style="margin-top: 8px;">Masuk</button>
+                                <p> 
+                                    <small>Belum punya akun?</small> 
+                                </p>
+                                <a class="modal-trigger" href="#" data-target="daftar_modal"> 
+                                    <b>Daftar</b> 
+                                </a>
+                            </div>                            
+                        </div>                       
+                    </div>
+                </div>
+            </div>            
+        </div>       
+    </div>
+    
+    <div id="daftar_modal" class="modal">
+      <div class="modal-content">
+         <div class="row">
+             <div class="col s12">
+                 <h4>Daftar</h4>
+                 <form action="" style="margin-top: 20px;">
+                   <div class="row">
+                      <div class="input-field col s12 m6 l12">
+                          <input class="daftar" type="text" name="nama" id="nama_text">
+                          <label for="nama_text">Nama Lengkap</label>
+                      </div>
+                      <div class="input-field col s12 m6 l12">
+                          <input class="daftar" type="text" name="nickname_text" id="nickname_text">
+                          <label for="nickname_text">Nama Panggilan</label>
+                      </div>      
+                      <div class="input-field col s12 m6 l12">
+                          <input class="daftar" type="tel" name="hp" id="hp_text">
+                          <label for="hp_text">Nomor Handphone</label>
+                      </div>
+                      <div class="input-field col s12 m6">
+                          <input class="daftar" type="text" name="job" id="job_text">
+                          <label for="job_text">Pekerjaan</label>
+                      </div>
+                      <div class="input-field col s12 m6">
+                          <input class="daftar" type="text" name="instansi" id="instansi_text">
+                          <label for="instansi_text">Instansi / Komunitas</label>
+                      </div>
+                      <div class="input-field col s12 m12 l12">
+                           <input class="daftar" type="email" name="email_new" id="email_new_text">
+                           <label for="email_new_text">Email</label>
+                       </div>
+                      <div class="input-field col s12 m6">
+                           <input class="daftar" type="password" name="password_new" id="password_new_text">
+                           <label for="password_new_text">Password</label>
+                      </div>
+                      <div class="input-field col s12 m6">
+                          <input class="daftar" type="password" name="repeat_password" id="repeat_password_text">
+                          <label for="repeat_password_text">Konfirmasi Password</label>
+                      </div> 
+                   </div>                                                                                  
+                 </form>
+                 <button id="daftar_btn" class="btn blue right waves-effect waves-light">Daftar</button>
+                  <button class="btn modal-close grey darken-1 right waves-effect waves-light" style="margin-right: 10px;">Batalkan</button>        
+                 
+             </div>
+         </div>
+      </div>             
+  </div>
+
+    <%- include ('../partials/global'); %>
+
+    <script src="js/pages/login.js"></script>
+     
+</body>
