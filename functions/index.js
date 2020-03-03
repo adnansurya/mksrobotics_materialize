@@ -12,8 +12,9 @@ app.set('view engine', 'ejs');
 
 
 app.get('/blank', (req,res) => {
-    res.render('pages/blank');    
+    res.render('pages/blank', {page : 'blank', web_name : web_name});    
 });
+
 
 exports.apps = functions.https.onRequest(app);
 // // Create and Deploy Your First Cloud Functions
