@@ -142,7 +142,16 @@ $(document).ready(function(){
                         $.post('/cek_token', {id_token : idToken})
                         .done(function( data ) {
                             if(data === 'login_success'){
-                                location.href = '/admin';
+                                auth.signOut().then(function() {                    
+                                    toast('Login Berhasil!');
+                                    location.href = '/admin';
+                    
+                                }).catch(function(error) {
+                                    toast(error.message);
+                                    location.href = '/login';
+                    
+                                });
+                                
                             }
                           });
                         
