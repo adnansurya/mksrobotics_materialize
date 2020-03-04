@@ -1,9 +1,9 @@
 
 
 $(document).ready(function(){
-    $('.modal').modal();
-
     const auth = firebase.auth();
+
+    $('.modal').modal();  
     
     let nama, nickname, hp, job, instansi, email, password, password2;
     
@@ -64,12 +64,13 @@ $(document).ready(function(){
 
                 });
             }
+            
         });
     }
 
 
     function isiData(user, hp, job, instansi){
-        const db = firebase.database();
+        
         let success = true;
         db.ref('users/' + user.uid).set({
             email : user.email,
@@ -87,7 +88,7 @@ $(document).ready(function(){
             if(success){
                 auth.signOut().then(function() {                    
                     toast('Pendaftaran Berhasil!');
-                    location.href = 'login.html';   
+                    location.href = '/login';   
     
                 }).catch(function(error) {
                     toast(error.message);
@@ -134,7 +135,23 @@ $(document).ready(function(){
             // ...
         }).then(function(){
             if(success){
-                location.href = "index.html";
+               let user = auth.currentUser;
+                if (user) {          
+                    user.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+
+                        $.post('/cek_token', {id_token : idToken})
+                        .done(function( data ) {
+                            if(data === 'login_success'){
+                                location.href = '/admin';
+                            }
+                          });
+                        
+                    }).catch(function(error){
+                        toast(error.message);
+                    });
+                }else{
+                    toast('tidak ada user');
+                }
             }
         });
     });

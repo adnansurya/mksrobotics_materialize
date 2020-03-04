@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include ('../partials/head'); %>
+  <title> <%= page.toUpperCase(); %> | <%= web_name %> </title>
+</head>
+<body>
+
+    <%- include ('../partials/firebase'); %>
+    
+    <%- include ('../partials/navigation'); %>
+    
+    <div class="container">
+        <div class="row">
+            <p id="user">Username</p>
+        </div>
+    </div>
+
+    <%- include ('../partials/footer'); %>
+
+    <%- include ('../partials/global'); %>
+
+    <script src="js/pages/admin.js"></script>
+     
+</body>
