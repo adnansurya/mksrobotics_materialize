@@ -5,12 +5,12 @@ $( document ).ready(function() {
   $('select').formSelect();
   $('.fixed-action-btn').floatingActionButton();
   $('.modal').modal();
+
   
-
-
-  const db = firebase.database();
- 
-
+  $(".dropdown-trigger").dropdown({
+    hover : true
+  });
+  
   
   let totalProduct, totalPage, lastUpdated;
   let category = 'SEMUA';
@@ -18,7 +18,7 @@ $( document ).ready(function() {
   let perPage = parseInt( $('#itemPerPage').val());
 
  
-
+  const db = firebase.database();
   db.ref('category').once('value').then(function(snapshot){
     $('.categoryDiv').append(
       `<p style="margin-top: 5px;margin-bottom: 5px;">
@@ -175,7 +175,7 @@ $( document ).ready(function() {
       arrowLeft += `class="disabled"`;
     }
     arrowLeft += `>
-                  <a href="#!">
+                  <a href="#logo-container">
                     <i class="material-icons">chevron_left</i>
                   </a>
                 </li>`;
@@ -188,7 +188,7 @@ $( document ).ready(function() {
       }else{
         pageNumber +=`<li class="waves-effect">`;
       }
-      pageNumber += `<a href="#!">`+ i + `</a></li>`;    
+      pageNumber += `<a href="#logo-container">`+ i + `</a></li>`;    
     }
   
     let arrowRight = `<li `; 
@@ -197,7 +197,7 @@ $( document ).ready(function() {
       arrowRight += `class="disabled"`;
     }
     arrowRight += `>
-                  <a href="#!">
+                  <a href="#logo-container">
                     <i class="material-icons">chevron_right</i>
                   </a>
                 </li>`;
