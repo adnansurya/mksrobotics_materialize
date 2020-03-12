@@ -48,6 +48,43 @@ app.get('/login', (req,res) => {
     
 });
 
+
+app.post('/daftar', (req,res) =>{
+    // auth.createUser
+    let dataUser = req.body;
+    let email = dataUser.email_new;
+    let password = dataUser.password_new;
+    let password2 = dataUser.repeat_password;
+    delete dataUser.password_new;
+    delete dataUser.repeat_password;
+    // console.log(dataUser);
+    
+    if(password === password2){        
+        auth.createUser({
+            email : email,
+            password : password,
+            displayName : dataUser.userName,
+        }).catch(function(error) {
+                    // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            res.send(errorCode + ' : ' + errorMessage);           
+        }).then(function(userRecord){
+            db.ref('users/'+ userRecord.uid ).set(dataUser).catch(function(error){
+                res.send(error.code + ' : ' + error.message);   
+            }).then(function(){
+                res.send('berhasil');
+            });
+            
+        });
+    }else{
+        res.send('unmatch');
+    }
+
+    
+    
+});
+
 app.post('/cek_token', (req,res) =>{
     let token = req.body.id_token;
  
