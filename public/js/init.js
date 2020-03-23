@@ -27,6 +27,12 @@ function capitalFirstLetter(word){
   return word.charAt(0).toUpperCase() +word.slice(1)
 }
 
+const rupiah = new Intl.NumberFormat('id-ID', {
+  style: 'currency',
+  currency: 'IDR',
+  minimumFractionDigits: 0
+})
+
 
 
 

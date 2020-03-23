@@ -146,11 +146,29 @@ app.get('/logout', (req,res) => {
 
 });
 
-
+app.get('/product_test', (req,res) => {
+    res.render('pages/product', {page : 'product', web_name : web_name, isLogin : req.session.user});    
+});
 
 
 app.get('/blank', (req,res) => {
     res.render('pages/blank', {page : 'blank', web_name : web_name});    
+});
+
+app.get('/api/all_product', function(req, res){
+    var items = [];
+    var products = {
+        data : []
+    };
+    
+    db.ref('product_data').once('value').then(function(snapshot){
+        snapshot.forEach(function(childSnap){
+            products['data'].push(childSnap);
+        });
+      
+        res.send(JSON.stringify(products));
+    });
+    
 });
 
 const admin = require('./admin.js');

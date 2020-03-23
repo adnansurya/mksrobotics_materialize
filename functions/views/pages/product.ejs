@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include ('../partials/head'); %>
+  <title> <%= page.toUpperCase(); %> | <%= web_name %> </title>
+</head>
+<body>
+
+    <%- include ('../partials/firebase'); %>
+    
+    <%- include ('../partials/navigation'); %>
+    
+    <div class="container">
+        <div class="row">
+            <p id="user">Username</p>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <table id="product_table" class="display" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Nama Produk</th>
+                                <th>Kategori</th>
+                                <th>Harga Modal</th>                                                                                                                     
+                                <th>Harga Jual</th>
+                                <th>Stok</th>
+                                <th>Satuan</th>
+                                <th>Code</th>
+                                <th>Type</th>                                
+                                <th>UXID</th>
+                            </tr>
+                        </thead>                   
+                </table>
+            </div>
+            
+        </div>
+    </div>
+
+    <%- include ('../partials/footer'); %>
+
+    <%- include ('../partials/init'); %>
+
+    <script src="/static/js/pages/product.js"></script>
+     
+</body>
