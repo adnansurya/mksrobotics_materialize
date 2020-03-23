@@ -123,7 +123,7 @@ $( document ).ready(function() {
             <div class="card hoverable">
               <div class="card-image grey">
                 <div class="valign-wrapper my-responsive-card">
-                 <img src="img/mksrobotics_logo_long.jpg" alt="" class="responsive-img materialboxed" data-caption="`+data.name+`" style="padding: 10px;">
+                 <img src="/static/img/mksrobotics_logo_long.jpg" alt="" class="responsive-img materialboxed" data-caption="`+data.name+`" style="padding: 10px;">
                 </div>
                
                 <a class="btn-floating halfway-fab waves-effect waves-light green" style="right: 12px;"><i class="material-icons">list</i></a>                                                           
