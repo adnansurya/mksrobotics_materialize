@@ -15,9 +15,9 @@
         <!-- <li><a href="#">Coming Soon</a></li> -->
         
           <% if (page === 'store') { %>
-            <li class="active"><a href="#"><i class="material-icons left">shopping_cart</i>Store</a></li>
+            <li class="active"><a href="#"><i class="material-icons left">storefront</i>Store</a></li>
           <% } else {%>
-            <li><a href="/store"><i class="material-icons left">shopping_cart</i>Store</a></li>
+            <li><a href="/store"><i class="material-icons left">storefront</i>Store</a></li>
           <% } %>          
         
         
@@ -27,7 +27,14 @@
             <li><a href="#"><i class="material-icons left">work</i>Project</a></li>
           <% } %>    
         </li>
+       
         <% if (isLogin) { %>
+          <% if (isLogin.roles === 'admin') { %>
+            <li><a class="dropdown-trigger" data-target="dropdown2"><i class="material-icons left">stars</i>Admin<i class="material-icons right">arrow_drop_down</i></a></li>                  
+            <ul id="dropdown2" class="dropdown-content">    
+              <li><a href="#">Product</a></li>
+            </ul> 
+          <% } %> 
           <li><a class="dropdown-trigger" data-target="dropdown1"><i class="material-icons left">face</i>Hai,  <%- isLogin.nickname %> <i class="material-icons right">arrow_drop_down</i></a></li>                  
           <ul id="dropdown1" class="dropdown-content">
             <li><a href="#!">Profil</a></li>            
@@ -51,7 +58,7 @@
           <% if (isLogin) { %>    
             <a href="#user"><img class="circle white" src="img/logo.png"></a>      
             <a href="#name"><span class="white-text name"><%= isLogin.nama %> </span></a>
-            <a href="#email"><span class="white-text email"><%= isLogin.email %> </span></a>
+            <a href="#email"><span class="white-text email"><%= isLogin.roles.toUpperCase(); %> </span></a>
           <% } else {%>
             <a href="/login"><img class="circle white" src="img/logo.png"></a>
             <a href="/login"><span class="white-text name">Makassar Robotics</span></a>      
@@ -68,9 +75,9 @@
 
 
         <% if (page === 'store') { %>
-          <li class="active"><a href="#"><i class="material-icons left">shopping_cart</i>Store</a></li>
+          <li class="active"><a href="#"><i class="material-icons left">storefront</i>Store</a></li>
         <% } else {%>
-          <li><a href="/store"><i class="material-icons left">shopping_cart</i>Store</a></li>
+          <li><a href="/store"><i class="material-icons left">storefront</i>Store</a></li>
         <% } %>          
       
       
@@ -78,9 +85,16 @@
           <li class="active"><a href="#"><i class="material-icons left">work</i>Project</a></li>
         <% } else {%>
           <li><a href="/project"><i class="material-icons left">work</i>Project</a></li>
-        <% } %>   
+        <% } %>
         
+       
         <% if (isLogin) { %>  
+          <% if (isLogin.roles === 'admin') { %>
+            <li><div class="divider"></div></li>
+            <li><a class="subheader">Admin</a></li>
+            <li><a href="#"><i class="material-icons left">list_alt</i>List Produk</a></li>   
+  
+          <% } %>
           <li><div class="divider"></div></li>
           <li><a class="subheader">Akun</a></li>        
           <li><a href="#"><i class="material-icons left">face</i>Profil</a></li>                  
