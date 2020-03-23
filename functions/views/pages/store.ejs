@@ -40,8 +40,11 @@
           </div>      
         </div>
         <div class="col s12 m9">
-          <h4 class="blue-text text-darken-3">Produk</h4>      
-          <div class="divider"></div>
+          <div class="hide-on-small-only">
+            <h4 class="blue-text text-darken-3">Store</h4>      
+            <div class="divider"></div>
+          </div>
+          
           <div class="progress" id="productLoad">
               <div class="indeterminate blue"></div>
           </div>      
@@ -70,9 +73,27 @@
           
         </div>
 
+        <div class="fixed-action-btn hide-on-med-and-up" style="bottom: 24px; right: 24px;">
+          <btn data-target="modal1" class="btn-floating btn-large green pulse waves-effect waves-light waves-circle btn modal-trigger">
+            <i class="large material-icons">filter_list</i>
+          </btn>
+        </div>
+      
+        <div id="modal1" class="modal">
+          <div class="modal-content">
+            <h4>Kategori</h4>
+            <form action="#" id="mobileCategory" class="categoryDiv">
+                                   
+            </form>      
+          </div>
+          <div class="modal-footer">
+            <button id="mobileProductFilterBtn" class="modal-close waves-effect waves-green btn-flat">Terapkan Filter</button>
+          </div>
+        </div>
+
     <%- include ('../partials/footer'); %>
 
-    <%- include ('../partials/global'); %>
+    <%- include ('../partials/init'); %>
 
     <script src="js/pages/product.js"></script>
      
