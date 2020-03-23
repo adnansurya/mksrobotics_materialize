@@ -1,6 +1,6 @@
 $(document).ready(function() {
     
-    $('#product_table').DataTable( {
+    let table = $('#product_table').DataTable( {
         "ajax": "http://localhost:5000/api/all_product",
         "columns": [
             { "data": "name" },
@@ -21,9 +21,11 @@ $(document).ready(function() {
             { "data": "unit" },
             { "data": "code" },   
             { "data": "type" },          
-            { "data": "uxid" }
+            { "data": "uxid" },
+            { "data" : null}
         ],
-        "columnDefs": [           
+        "columnDefs": [
+                     
             {
                 "targets": [ 6 ],
                 "visible": false,
@@ -36,10 +38,25 @@ $(document).ready(function() {
             {
                 "targets": [ 8 ],
                 "visible": false
-            }
+            },
+            {
+                "targets": -1,
+                "data": null,
+                "defaultContent": `<button class="waves-effect waves-light btn btn-small">Edit</button>`
+            }            
         ],
-        responsive: true,
+        responsive: true
         
     } );
     $('select').formSelect();
+
+    $('#product_table tbody').on( 'click', 'button', function () {
+        let data = table.row( $(this).parents('tr') ).data();
+        
+
+        let modal1 = M.Modal.getInstance($('#modal1'));
+        $('#uxid_text').val(data.uxid);
+        $('#uxid_val').val(data.uxid);
+        modal1.open();
+    } );
 } );

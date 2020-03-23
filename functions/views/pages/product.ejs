@@ -10,12 +10,13 @@
     
     <%- include ('../partials/navigation'); %>
     
-    <div class="container">
-        <div class="row">
-            <p id="user">Username</p>
-        </div>
+    <div class="container">        
         <div class="row">
             <div class="col s12">
+                <div class="hide-on-small-only">
+                    <h4 class="blue-text text-darken-3">Product</h4>      
+                    <div class="divider"></div>
+                </div>
                 <table id="product_table" class="display" width="100%">
                         <thead>
                             <tr>
@@ -28,12 +29,48 @@
                                 <th>Code</th>
                                 <th>Type</th>                                
                                 <th>UXID</th>
+                                <th>Action</th>
                             </tr>
                         </thead>                   
                 </table>
             </div>
             
         </div>
+    </div>
+
+    <div id="modal1" class="modal">
+        <form style="margin-top: 20px;" action="/edit_product" method="POST">
+            <div class="modal-content">
+                <div class="row">
+                    <div class="col s12 m6 l12">
+                        <h4>Edit Deskripsi</h4>                                                         
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 0px;"> 
+                    <input type="hidden" name="uxid" id="uxid_val">                   
+                    <div class="input-field col s12 m6 l12">
+                        <input type="text" name="uxid" id="uxid_text" disabled>
+                        <label for="uxid_text">Unique ID</label>
+                    </div>                                                              
+                    <div class="input-field col s12 m6 l12">
+                        <input type="text" name="picture" id="picture_text" required>
+                        <label for="picture_text">URL Gambar</label>
+                    </div>
+                    <div class="input-field col s12 m6 l12">
+                        <input type="text" name="details" id="details_text" required>
+                        <label for="details_text">Keterangan</label>
+                    </div>
+                    <div class="input-field col s12 m6 l12">
+                        <button id="editDescBtn" class="btn blue right waves-effect waves-light">Simpan</button>
+                        <button class="btn modal-close grey darken-1 right waves-effect waves-light" style="margin-right: 10px;">Batalkan</button>    
+                    </div>
+                    
+                </div>                
+            </div>
+          
+                
+           
+        </form>
     </div>
 
     <%- include ('../partials/footer'); %>
