@@ -1,4 +1,4 @@
-<nav class="light-blue darken-3" role="navigation">
+<nav class="light-blue darken-3 nav-extended" role="navigation">
     <div class="nav-wrapper">
      
       <a id="logo-container" class="brand-logo"
@@ -12,12 +12,54 @@
           <div class="hide-on-med-and-down" style="margin-left: 100px;">Makassar Robotics</div>
       </a>
       <ul class="right hide-on-med-and-down" style="margin-right: 100px;">
-        <li><a href="#">Coming Soon</a></li>
+        <!-- <li><a href="#">Coming Soon</a></li> -->
+        
+          <% if (page === 'store') { %>
+            <li class="active"> <a href="#">Store</a></li>
+          <% } else {%>
+            <li><a href="/store">Store</a></li>
+          <% } %>          
+        
+        
+          <% if (page === 'projects') { %>
+            <li class="active"><a href="#">Projects</a></li>
+          <% } else {%>
+            <li><a href="/projects">Projects</a></li>
+          <% } %>    
+        </li>
+        <% if (isLogin) { %>
+          <li><a class="dropdown-trigger" data-target="dropdown1">Hai,  <%- isLogin.nickname %> <i class="material-icons right">arrow_drop_down</i></a></li>                  
+          <ul id="dropdown1" class="dropdown-content">
+            <li><a href="#!">Profil</a></li>            
+            <li class="divider"></li>
+            <li><a href="/logout">Logout</a></li>
+          </ul> 
+        <% } %>
+
+      
+       
+                 
       </ul>
 
-      <ul id="nav-mobile" class="sidenav">
-        <li><a href="#">Coming Soon</a></li>
+      <ul id="nav-mobile" class="sidenav show-on-medium-and-down">
+        
+        <li><div class="user-view">
+          <div class="background blue">
+            <!-- <img src="img/mksrobotics_logo_long.jpg"> -->
+          </div>
+          <a href="#user"><img class="circle white" src="img/logo.png"></a>
+          <a href="#name"><span class="white-text name">John Doe</span></a>
+          <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
+        </div></li>
+        <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+        <li><a href="#!">Second Link</a></li>
+        <li><div class="divider"></div></li>
+        <li><a class="subheader">Subheader</a></li>
+        <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
       </ul>
       <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      
     </div>
+   
+   
   </nav>
