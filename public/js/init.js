@@ -23,6 +23,10 @@ function openLink(url){
   location.href = url;
 }
 
+function capitalFirstLetter(word){
+  return word.charAt(0).toUpperCase() +word.slice(1)
+}
+
 
 
 

@@ -50,14 +50,21 @@
           </div>      
             <p id="lastUpdateTxt" class="right-align"></p>    
           <div class="row" style="margin-top: 5px; margin-bottom: 0px;">
-            <div class="input-field col s12 m4 l2" style="margin-bottom: 0px;">          
-              <select id="itemPerPage">            
-                <option value="20" selected> 20 item</option>
-                <option value="40"> 40 item</option>
-                <option value="60"> 60 item</option>            
-              </select>
-              <label class="right">Tampilan per halaman</label>
-            </div>       
+            
+           
+            <div class="input-field col s12 m5 l4"><i class="tiny material-icons prefix">search</i>
+              <input id="search" type="text" class="validate">
+              <label for="search">Pencarian</label>
+            </div>
+            <div class="input-field col s12 m4 offset-m3 l2 offset-l6" style="margin-bottom: 0px;">          
+                <select id="itemPerPage">            
+                  <option value="20" selected> 20 item</option>
+                  <option value="40"> 40 item</option>
+                  <option value="60"> 60 item</option>            
+                </select>
+                <label class="right">Tampilan per halaman</label>
+              </div>
+              
           </div>  
           <div class="row">
             <div id="productDiv"></div>
@@ -95,6 +102,6 @@
 
     <%- include ('../partials/init'); %>
 
-    <script src="js/pages/product.js"></script>
+    <script src="/static/js/pages/store.js"></script>
      
 </body>
