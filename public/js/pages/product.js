@@ -1,17 +1,7 @@
 
 
 $( document ).ready(function() {
-  $('.sidenav').sidenav();
-  $('select').formSelect();
-  $('.fixed-action-btn').floatingActionButton();
-  $('.modal').modal();
-
-  
-  $(".dropdown-trigger").dropdown({
-    hover : true
-  });
-  
-  
+    
   let totalProduct, totalPage, lastUpdated;
   let category = 'SEMUA';
   let currentPage = 1;
@@ -155,7 +145,7 @@ $( document ).ready(function() {
       }
            
     });
-    
+    $('.fixed-action-btn').floatingActionButton();
     $('#productLoad').addClass('hide'); 
     $('.materialboxed').materialbox();     
   }
