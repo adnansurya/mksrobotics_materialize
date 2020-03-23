@@ -15,16 +15,16 @@
         <!-- <li><a href="#">Coming Soon</a></li> -->
         
           <% if (page === 'store') { %>
-            <li class="active"> <a href="#">Store</a></li>
+            <li class="active"><a href="#"><i class="material-icons left">shopping_cart</i>Store</a></li>
           <% } else {%>
-            <li><a href="/store">Store</a></li>
+            <li><a href="/store"><i class="material-icons left">shopping_cart</i>Store</a></li>
           <% } %>          
         
         
           <% if (page === 'projects') { %>
-            <li class="active"><a href="#">Projects</a></li>
+            <li class="active"><a href="#"><i class="material-icons left">work</i>Project</a></li>
           <% } else {%>
-            <li><a href="/projects">Projects</a></li>
+            <li><a href="#"><i class="material-icons left">work</i>Project</a></li>
           <% } %>    
         </li>
         <% if (isLogin) { %>
@@ -34,9 +34,9 @@
             <li class="divider"></li>
             <li><a href="/logout">Logout</a></li>
           </ul> 
-        <% } %>
-
-      
+          <% } else {%>
+            <li><a href="/login"><i class="material-icons left">account_circle</i>Login</a></li>                         
+          <% } %> 
        
                  
       </ul>
