@@ -2,12 +2,12 @@
     <div class="nav-wrapper">
      
       <a id="logo-container" class="brand-logo"
-          <% if(page === 'produk'){%> 
+          <% if(page === 'home'){%> 
             href="#" <% } else{ %>
             href="/" <% } %> 
          >
 
-          <div class="hide-on-med-and-up">MksRobotics</div>
+          <div class="hide-on-med-and-up"><%= page.toUpperCase() %> </div>
           <div class="hide-on-large-only hide-on-small-only">Makassar Robotics</div>
           <div class="hide-on-med-and-down" style="margin-left: 100px;">Makassar Robotics</div>
       </a>
@@ -21,14 +21,14 @@
           <% } %>          
         
         
-          <% if (page === 'projects') { %>
+          <% if (page === 'project') { %>
             <li class="active"><a href="#"><i class="material-icons left">work</i>Project</a></li>
           <% } else {%>
             <li><a href="#"><i class="material-icons left">work</i>Project</a></li>
           <% } %>    
         </li>
         <% if (isLogin) { %>
-          <li><a class="dropdown-trigger" data-target="dropdown1">Hai,  <%- isLogin.nickname %> <i class="material-icons right">arrow_drop_down</i></a></li>                  
+          <li><a class="dropdown-trigger" data-target="dropdown1"><i class="material-icons left">face</i>Hai,  <%- isLogin.nickname %> <i class="material-icons right">arrow_drop_down</i></a></li>                  
           <ul id="dropdown1" class="dropdown-content">
             <li><a href="#!">Profil</a></li>            
             <li class="divider"></li>
@@ -47,15 +47,45 @@
           <div class="background blue">
             <!-- <img src="img/mksrobotics_logo_long.jpg"> -->
           </div>
-          <a href="#user"><img class="circle white" src="img/logo.png"></a>
-          <a href="#name"><span class="white-text name">John Doe</span></a>
-          <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
+          
+          <% if (isLogin) { %>    
+            <a href="#user"><img class="circle white" src="img/logo.png"></a>      
+            <a href="#name"><span class="white-text name"><%= isLogin.nama %> </span></a>
+            <a href="#email"><span class="white-text email"><%= isLogin.email %> </span></a>
+          <% } else {%>
+            <a href="/login"><img class="circle white" src="img/logo.png"></a>
+            <a href="/login"><span class="white-text name">Makassar Robotics</span></a>      
+            <a href="/login"><span class="white-text email">Login</span></a>                         
+          <% } %> 
+         
         </div></li>
-        <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-        <li><a href="#!">Second Link</a></li>
-        <li><div class="divider"></div></li>
-        <li><a class="subheader">Subheader</a></li>
-        <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+
+        <% if (page === 'home') { %>
+          <li class="active"><a href="#"><i class="material-icons left">home</i>Home</a></li>
+        <% } else {%>
+          <li><a href="/"><i class="material-icons left">home</i>Home</a></li>
+        <% } %>
+
+
+        <% if (page === 'store') { %>
+          <li class="active"><a href="#"><i class="material-icons left">shopping_cart</i>Store</a></li>
+        <% } else {%>
+          <li><a href="/store"><i class="material-icons left">shopping_cart</i>Store</a></li>
+        <% } %>          
+      
+      
+        <% if (page === 'project') { %>
+          <li class="active"><a href="#"><i class="material-icons left">work</i>Project</a></li>
+        <% } else {%>
+          <li><a href="/project"><i class="material-icons left">work</i>Project</a></li>
+        <% } %>   
+        
+        <% if (isLogin) { %>  
+          <li><div class="divider"></div></li>
+          <li><a class="subheader">Akun</a></li>        
+          <li><a href="#"><i class="material-icons left">face</i>Profil</a></li>                  
+          <li><a href="/logout"><i class="material-icons left">exit_to_app</i>Logout</a></li>
+        <% } %>         
       </ul>
       <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       

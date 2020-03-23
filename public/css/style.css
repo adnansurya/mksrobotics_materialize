@@ -37,6 +37,11 @@
     width: 179px; 
     height:100%;
   }
+
+  .navbar-img{
+    width: 100px;
+    height: 100px;
+  }
 }
 
 @media only screen and (max-width: 600px) {
@@ -50,5 +55,10 @@
   .my-responsive-img{
     width: 159px; 
     height:100%;
+  }
+
+  .navbar-img{
+    width: 100px;
+    height: 100px;
   }
 }

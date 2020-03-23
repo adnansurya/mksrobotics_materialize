@@ -5,11 +5,11 @@ const web_name = 'Makassar Robotics';
 
 let logger = function(req, res, next) {
 
-  console.log('ADMIN : ' + req.session.logged_name);
+  // console.log(isLogin.name);
     
-  if(req.session.logged_name && req.session.logged_uid){
+  if(req.session.user){
 
-    console.log(new Date(), req.url)
+    // console.log(new Date(), req.url)
 
     next();
   }else{
@@ -20,8 +20,13 @@ let logger = function(req, res, next) {
 
 router.use('/static', express.static('../public'));
 
-router.get('/',logger, (req,res) => {
-    res.render('pages/admin', {page : 'admin', web_name : web_name});    
+router.get('/', logger, (req,res) => {
+    // console.log("LOGGED :"  + req.session.uid);
+        
+    res.render('pages/admin', {page : 'admin', web_name : web_name, isLogin : req.session.user});    
 });
+
+
+
 
 module.exports = router;
