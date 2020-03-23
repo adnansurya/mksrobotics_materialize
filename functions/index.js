@@ -4,23 +4,25 @@ var path = require("path");
 var cookieParser = require('cookie-parser');
 var cookieSession = require('cookie-session')
 var randomstring = require("randomstring");
-var admin = require('firebase-admin');
+var firebase_admin = require('firebase-admin');
 
 var path = require('path');
 var serviceAccount = require(path.join(__dirname, 'mksrobotics-firebase-adminsdk-ns7lo-c8869b32c9.json'));
 
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+firebase_admin.initializeApp({
+  credential: firebase_admin.credential.cert(serviceAccount),
   databaseURL: "https://mksrobotics.firebaseio.com",
   databaseAuthVariableOverride: null
 });
 
-const db = admin.database();
-const auth = admin.auth();
+const db = firebase_admin.database();
+const auth = firebase_admin.auth();
 
 const app = express();
 const web_name = 'Makassar Robotics';
+
+
 
 app.use('/static', express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
@@ -33,17 +35,29 @@ app.use(cookieSession({
        
 }));
 
+let users;
+
+
 app.get('/', (req,res) => {
-    res.render('pages/product', {page : 'produk', web_name : web_name});    
+    res.render('pages/store', {page : 'home', web_name : web_name, isLogin : req.session.user});    
 });
 
+app.get('/store', (req,res) => {
+    res.render('pages/store', {page : 'store', web_name : web_name, isLogin : req.session.user});    
+});
+
+app.get('/project', (req,res) => {
+    res.render('pages/blank', {page : 'project', web_name : web_name, isLogin : req.session.user});    
+});
+
+
 app.get('/login', (req,res) => {
-    console.log('LOGIN : ' + req.session.logged_uid);
+    // console.log('LOGIN : ' + req.session.logged_name);
     
-    if(req.session.logged_uid && req.session.logged_name){
+    if(req.session.user){
         res.redirect('/admin');
     }else{
-        res.render('pages/login', {page : 'login', web_name : web_name});    
+        res.render('pages/login', {page : 'login', web_name : web_name, isLogin : req.session.user});    
     }
     
 });
@@ -52,18 +66,21 @@ app.get('/login', (req,res) => {
 app.post('/daftar', (req,res) =>{
     // auth.createUser
     let dataUser = req.body;
+    dataUser.roles = 'customer';
     let email = dataUser.email_new;
     let password = dataUser.password_new;
     let password2 = dataUser.repeat_password;
+    delete dataUser.email_new;
     delete dataUser.password_new;
     delete dataUser.repeat_password;
-    // console.log(dataUser);
+    dataUser.email = email;
+    
     
     if(password === password2){        
         auth.createUser({
             email : email,
             password : password,
-            displayName : dataUser.userName,
+            displayName : dataUser.nickname,
         }).catch(function(error) {
                     // Handle Errors here.
             var errorCode = error.code;
@@ -85,43 +102,60 @@ app.post('/daftar', (req,res) =>{
     
 });
 
-app.post('/cek_token', (req,res) =>{
+app.post('/cek_token', (req,res) => {
     let token = req.body.id_token;
  
     auth.verifyIdToken(token)
     .then(function(decodedToken) {
         let uid = decodedToken.uid;
-        auth.getUser(uid)
-        .then(function(userRecord) {
+        // console.log(uid);
+        
+        // req.session.uid = uid; 
+        // auth.getUser(uid)
+        // .then(function(userRecord) {
+        // // See the UserRecord reference doc for the contents of userRecord.
+        //   console.log('Successfully fetched user data:', userRecord.toJSON());
+        //   user = userRecord.providerData[0];
+                    
+        // })
+        // .catch(function(error) {
+        //   console.log('Error fetching user data:', error);
+        //   res.send(error.code + ':' + error.message);
 
-            // See the UserRecord reference doc for the contents of userRecord.
-            //   console.log('Successfully fetched user data:', userRecord.toJSON());
-          user = userRecord.providerData[0];
-
-          req.session.logged_uid = uid;
-          req.session.logged_name = user.displayName;
-          res.send('login_success');        
-        })
-        .catch(function(error) {
-          console.log('Error fetching user data:', error);
-
+        // });
+        db.ref('users/'+ uid).once('value').then(function(snap){
+            req.session.user = snap.val();
+            
+            res.send('login_success');  
         });
+       
       
     }).catch(function(error) {
         // Handle error
         console.log('error verify' + error);
-        res.redirect('/login');
+        res.send(error);
     });
 
 });
+
+app.get('/logout', (req,res) => {
+    // res.render('pages/blank', {page : 'blank', web_name : web_name}); 
+    delete req.session.user;
+    
+    res.redirect('/login');
+
+});
+
+
+
 
 app.get('/blank', (req,res) => {
     res.render('pages/blank', {page : 'blank', web_name : web_name});    
 });
 
+const admin = require('./admin.js');
 
-const adminpath = require('./admin.js');
-app.use('/admin', adminpath);
 
+app.use('/admin', admin);
 exports.apps = functions.https.onRequest(app);
 
