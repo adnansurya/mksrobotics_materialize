@@ -1,7 +1,7 @@
 
 
 $( document ).ready(function() {
-    
+  loadInit();
   let totalProduct, totalPage, lastUpdated;
   let category = 'SEMUA';
   let currentPage = 1;
@@ -134,43 +134,64 @@ $( document ).ready(function() {
       startItem = perPage * (currentPage-1)
       endItem = startItem + perPage - 1;
     }
-    
- 
-    Object.keys(all).some(function(value, index, _arr) {
-       let data = all[value];
-       if(category === 'SEMUA' || (category !== 'SEMUA' &&  index>= startItem)){
-       
-        $('#productDiv').append(
-          `<div class="col l3 m4 s6">
-            <div class="card hoverable">
-              <div class="card-image grey">
-                <div class="valign-wrapper my-responsive-card">
-                 <img src="/static/img/mksrobotics_logo_long.jpg" alt="" class="responsive-img materialboxed" data-caption="`+data.name+`" style="padding: 10px;">
-                </div>
-               
-                <a class="btn-floating halfway-fab waves-effect waves-light green" style="right: 12px;"><i class="material-icons">list</i></a>                                                           
-              </div>
-              <div class="card-content" style="padding: 10px; margin-top: 8px;">        
-                <p class="truncate">
-                `+ data.name+`
-                </p>
-                <p>Rp.`+ data.sellPrice+`<small> / `+ data.unit+`</small></p>
-                <p class="right-align">Stok :<b> `+data.stockAmount+`</b></p>  
-              </div>           
-            </div>
-          </div>`
-        );
-       }
+    let allDesc;
+     db.ref('description').once('value').then(function(snapshot){        
+        allDesc = clone(snapshot.val());
 
-      if(category !== 'SEMUA'){
-        return index === endItem;      
-      }
+    }).then(function(){
+      
+      Object.keys(all).some(function(value, index, _arr) {
+        let data = all[value];
+        if(category === 'SEMUA' || (category !== 'SEMUA' &&  index>= startItem)){
+ 
+       
+        if(allDesc[data.uxid] == null || allDesc[data.uxid] == undefined){
+          desc = {
+                  picture :'/static/img/logo.png',
+                  details : 'Belum Tersedia'
+                } 
+        }else{
+          desc = allDesc[data.uxid];
+        }
            
+           $('#productDiv').append(
+             `<div class="col l3 m4 s6">
+               <div class="card hoverable">
+                 <div class="card-image grey">
+                   <div class="valign-wrapper my-responsive-card">
+                    <img src="`+desc.picture+`" alt="`+data.name+`" class="responsive-img materialboxed" data-caption="`+data.name+`" style="padding: 10px;">
+                   </div>
+                  
+                   <a class="btn-floating halfway-fab waves-effect waves-light green" style="right: 12px;"><i class="material-icons">list</i></a>                                                           
+                 </div>
+                 <div class="card-content" style="padding: 10px; margin-top: 8px;">        
+                   <p class="truncate">
+                   `+ data.name+`
+                   </p>
+                   <p>Rp.`+ data.sellPrice+`<small> / `+ data.unit+`</small></p>
+                   <p class="right-align">Stok :<b> `+data.stockAmount+`</b></p>  
+                 </div>           
+               </div>
+             </div>`
+           );
+         // });
+        
+        
+        }
+ 
+       if(category !== 'SEMUA'){
+         return index === endItem;      
+       }
+          
+     });
+    }).then(function(){
+      $('.materialboxed').materialbox();
+      $('.fixed-action-btn').floatingActionButton();
+      $('#productLoad').addClass('hide'); 
     });
-  
-    $('.fixed-action-btn').floatingActionButton();
-    $('#productLoad').addClass('hide'); 
-    $('.materialboxed').materialbox();     
+    
+   
+    
   }
 
   $('#mobileProductFilterBtn').on('click', function(){

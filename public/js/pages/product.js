@@ -1,5 +1,11 @@
 $(document).ready(function() {
     loadInit();
+   
+    $('#picture_text').val("");
+    $('#details_text').val("");
+    $('#product_pic').attr("alt", "");
+    $('#product_pic').attr("src", "");
+
     let selectedId, selectedName;
     const db = firebase.database();
     let table = $('#product_table').DataTable( {
@@ -57,26 +63,46 @@ $(document).ready(function() {
         selectedName = $(this).attr('data-name');
         
     });
-
+   
     $('#modal1').modal({
         'onOpenStart': 
             function(){                        
-                $('#nama_text').val(selectedName);
+             
                 $('#uxid_val').val(selectedId);
-
+                $('#nama_text').val(selectedName);
+                // M.textareaAutoResize($('#nama_text'));  
+                
                 db.ref('description/'+selectedId).once('value').then(function(snapshot){
                     let data = snapshot.val();
                     if(data != null){
+                
+                                
                         $('#picture_text').val(data.picture);
+                        M.textareaAutoResize($('#picture_text'));
                         $('#details_text').val(data.details);
+                        M.textareaAutoResize($('#details_text'));
                         $('#product_pic').attr("alt", data.picture);
                         $('#product_pic').attr("src", data.picture);
                         $('.materialboxed').materialbox();
-                        M.textareaAutoResize($('#picture_text'));
-                        M.textareaAutoResize($('#details_text'));
+                        
+                       
+                        
+                       
                     }
                     
                 });
+            },
+        'onCloseStart':
+            function(){
+            
+                $('#picture_text').val("");
+                $('#details_text').val("");
+                $('#uxid_val').val("");
+                $('#product_pic').attr("alt", "");
+                $('#product_pic').attr("src", "");
+                M.textareaAutoResize($('#picture_text'));
+                M.textareaAutoResize($('#details_text'));
+                
             }
     });
    
