@@ -70,7 +70,7 @@ $(document).ready(function() {
              
                 $('#uxid_val').val(selectedId);
                 $('#nama_text').val(selectedName);
-                // M.textareaAutoResize($('#nama_text'));  
+                M.textareaAutoResize($('#nama_text'));  
                 
                 db.ref('description/'+selectedId).once('value').then(function(snapshot){
                     let data = snapshot.val();
@@ -98,10 +98,12 @@ $(document).ready(function() {
                 $('#picture_text').val("");
                 $('#details_text').val("");
                 $('#uxid_val').val("");
+                $('#nama_text').val("");
                 $('#product_pic').attr("alt", "");
                 $('#product_pic').attr("src", "");
                 M.textareaAutoResize($('#picture_text'));
                 M.textareaAutoResize($('#details_text'));
+                M.textareaAutoResize($('#nama_text')); 
                 
             }
     });

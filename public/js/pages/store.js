@@ -119,7 +119,7 @@ $( document ).ready(function() {
       });
     }   
   }
-
+  let allDesc;
   function appendProduct(all){
     let startItem = 0;
     let endItem = 0;
@@ -134,12 +134,12 @@ $( document ).ready(function() {
       startItem = perPage * (currentPage-1)
       endItem = startItem + perPage - 1;
     }
-    let allDesc;
+    
      db.ref('description').once('value').then(function(snapshot){        
         allDesc = clone(snapshot.val());
 
     }).then(function(){
-      
+
       Object.keys(all).some(function(value, index, _arr) {
         let data = all[value];
         if(category === 'SEMUA' || (category !== 'SEMUA' &&  index>= startItem)){
@@ -162,7 +162,7 @@ $( document ).ready(function() {
                     <img src="`+desc.picture+`" alt="`+data.name+`" class="responsive-img materialboxed" data-caption="`+data.name+`" style="padding: 10px;">
                    </div>
                   
-                   <a class="btn-floating halfway-fab waves-effect waves-light green" style="right: 12px;"><i class="material-icons">list</i></a>                                                           
+                   <a data-target="modal2" data-id="`+data.uxid+`" data-name="`+data.name+`" class="btn-floating halfway-fab waves-effect waves-light green modal-trigger my-details" style="right: 12px;"><i class="material-icons">list</i></a>                                                           
                  </div>
                  <div class="card-content" style="padding: 10px; margin-top: 8px;">        
                    <p class="truncate">
@@ -240,6 +240,8 @@ $( document ).ready(function() {
     
   }
 
+  
+
   $('.pageNum').on('click','a', function(){
     let clickedPage = $(this).text()
     let clickedParent =  $(this).parent('li');
@@ -263,6 +265,37 @@ $( document ).ready(function() {
       loadProduct();
     }   
     
+  });
+
+  let selectedId, selectedName, selectedDetails;
+  $('#productDiv').on('click','a', function(){  
+    selectedId = $(this).attr('data-id');
+    selectedName = $(this).attr('data-name');
+
+    if(allDesc[selectedId] == null || allDesc[selectedId] == undefined){
+      selectedDetails = 'Belum ada keterangan';  
+            
+    }else{
+      if(allDesc[selectedId]['details'] != null && allDesc[selectedId]['details'] != undefined){
+        selectedDetails = allDesc[selectedId]['details'];
+        console.log(selectedDetails);
+      }else{
+       selectedDetails = 'Belum ada keterangan'; 
+      }
+    }
+  
+    
+  });
+
+  $('#modal2').modal({
+    'onOpenStart': 
+        function(){  
+         
+        
+          $('#product_text').text(selectedName);
+          $('#details_text').val(selectedDetails);
+          M.textareaAutoResize($('#details_text'));
+        }
   });
 
 });
