@@ -2,7 +2,7 @@ $( document ).ready(function() {
 
   $('.sidenav').sidenav();
   $('select').formSelect();
-  $('.modal').modal();
+  $('.modal').modal(); 
   $(".dropdown-trigger").dropdown({
     hover : true
   });

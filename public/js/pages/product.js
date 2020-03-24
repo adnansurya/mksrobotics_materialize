@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    
+    let selectedId, selectedName;
     let table = $('#product_table').DataTable( {
         "ajax": "http://localhost:5000/api/all_product",
         "columns": [
@@ -22,7 +22,12 @@ $(document).ready(function() {
             { "data": "code" },   
             { "data": "type" },          
             { "data": "uxid" },
-            { "data" : null}
+            { 
+                data: 'uxid',
+                render: function ( data, type, row ) {
+                    return `<button class="waves-effect waves-light btn btn-small modal-trigger uxid" href="#modal1" data-id="`+data+`" data-name="`+row['name']+`">Edit</button>`;
+                } 
+            }
         ],
         "columnDefs": [
                      
@@ -38,25 +43,31 @@ $(document).ready(function() {
             {
                 "targets": [ 8 ],
                 "visible": false
-            },
-            {
-                "targets": -1,
-                "data": null,
-                "defaultContent": `<button class="waves-effect waves-light btn btn-small">Edit</button>`
-            }            
+            }         
         ],
         responsive: true
         
     } );
     $('select').formSelect();
-
-    $('#product_table tbody').on( 'click', 'button', function () {
-        let data = table.row( $(this).parents('tr') ).data();
+  
+    table.on("click", "button", function () {            
+        selectedId = $(this).attr('data-id');
+        selectedName = $(this).attr('data-name');
         
+    });
 
-        let modal1 = M.Modal.getInstance($('#modal1'));
-        $('#uxid_text').val(data.uxid);
-        $('#uxid_val').val(data.uxid);
-        modal1.open();
-    } );
+    $('#modal1').modal({
+        'onOpenStart': 
+            function(){                        
+                $('#nama_text').val(selectedName);
+                $('#uxid_val').val(selectedId);
+            }
+    });
+   
+    $('#picture_text').change(function(){
+        pic_url = $(this).val();              
+        $('#product_pic').attr("src", pic_url);
+        $('.materialboxed').materialbox();               
+    });
+    
 } );
