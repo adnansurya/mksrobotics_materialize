@@ -1,6 +1,7 @@
 
 
-$(document).ready(function(){    
+$(document).ready(function(){  
+    loadInit();  
     const auth = firebase.auth();
     $('.modal').modal(); 
     

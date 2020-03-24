@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    loadInit();
     let selectedId, selectedName;
     const db = firebase.database();
     let table = $('#product_table').DataTable( {
@@ -65,12 +66,16 @@ $(document).ready(function() {
 
                 db.ref('description/'+selectedId).once('value').then(function(snapshot){
                     let data = snapshot.val();
-                    $('#picture_text').val(data.picture);
-                    $('#details_text').val(data.details);
-                    $('#product_pic').attr("alt", data.picture);
-                    $('#product_pic').attr("src", data.picture);
-                    M.textareaAutoResize($('#picture_text'));
-                    M.textareaAutoResize($('#details_text'));
+                    if(data != null){
+                        $('#picture_text').val(data.picture);
+                        $('#details_text').val(data.details);
+                        $('#product_pic').attr("alt", data.picture);
+                        $('#product_pic').attr("src", data.picture);
+                        $('.materialboxed').materialbox();
+                        M.textareaAutoResize($('#picture_text'));
+                        M.textareaAutoResize($('#details_text'));
+                    }
+                    
                 });
             }
     });

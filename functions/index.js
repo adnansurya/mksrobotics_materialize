@@ -169,26 +169,9 @@ app.get('/api/all_product', function(req, res){
     
 });
 
-app.get('/product_test', (req,res) => {
-    res.render('pages/product', {page : 'product', web_name : web_name, isLogin : req.session.user});    
-});
 
-app.post('/edit_product', (req,res) =>{
-    let data = req.body;
-    console.log(data);
-    
-    
-    db.ref('description/'+ data.uxid).set({
-        picture : data.picture,
-        details : data.details
-    }).catch(function(error){
-        res.send(error.message);
-    }).then(function(){
-        res.redirect('/product_test');
-    });
-});
 
-const admin = require('./admin.js');
+const admin = require('./admin.js')(db);
 
 
 app.use('/admin', admin);

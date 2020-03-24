@@ -1,9 +1,5 @@
-// $(document).ready(function(){
-//     $('.sidenav').sidenav();
+$( document ).ready(function() {
+    loadInit();
+ 
 
-//     $(".dropdown-trigger").dropdown({
-//         hover : true
-//     });
-
-// });
-
+});

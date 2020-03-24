@@ -1,15 +1,11 @@
-$( document ).ready(function() {
-
+function loadInit(){
   $('.sidenav').sidenav();
   $('select').formSelect();
   $('.modal').modal(); 
   $(".dropdown-trigger").dropdown({
     hover : true
   });
-
-});
-
-
+}
 
 function toast(pesan){
   M.toast({html: pesan});
