@@ -165,7 +165,7 @@ $( document ).ready(function() {
                     <img src="`+desc.picture+`" alt="`+data.name+`" class="responsive-img materialboxed" data-caption="`+data.name+`" style="padding: 10px;">
                    </div>
                   
-                   <a data-target="modal2" data-id="`+data.uxid+`" data-name="`+data.name+`" class="btn-floating halfway-fab waves-effect waves-light green modal-trigger my-details" style="right: 12px;"><i class="material-icons">list</i></a>                                                           
+                   <a data-target="modal2" data-id="`+data.uxid+`" data-name="`+data.name+`" class="btn-floating halfway-fab waves-effect waves-light green modal-trigger my-details" style="right: 12px;"><i class="material-icons">subject</i></a>                                                           
                  </div>
                  <div class="card-content" style="padding: 10px; margin-top: 8px;">        
                    <p class="truncate">
