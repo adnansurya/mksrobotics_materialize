@@ -69,22 +69,62 @@ $(document).ready(function() {
   
     table.on("click", "button", function () {            
         selectedId = $(this).attr('data-id');
-        selectedName = $(this).attr('data-name');
+    selectedName = $(this).attr('data-name');       
+        
    
         $('#uxid_val').val(selectedId);
-      
+        $('#nama_text').val(selectedName);
+        M.textareaAutoResize($('#nama_text')); 
         
         
         db.ref('description/'+selectedId).once('value').then(function(snapshot){
             selectedDesc = snapshot.val();
             
-
             
+            $('#modal1').modal({
+                'onOpenStart': 
+                    function(){   
+                        
+                                         
+                        if(selectedDesc != null){
+                                 
+                             
+                            $('#picture_text').val(selectedDesc.picture);
+                            M.textareaAutoResize($('#picture_text'));
+                            $('#details_text').val(selectedDesc.details.trim());
+                            M.textareaAutoResize($('#details_text'));
+                            $('#product_pic').attr("alt", selectedDesc.picture);
+                            $('#product_pic').attr("src", selectedDesc.picture);
+                            $('.materialboxed').materialbox();
+                           
+                        }
+                       
+                    },
+                'onCloseStart':
+                    function(){
+                    
+                        $('#picture_text').val("");
+                        $('#details_text').val("");
+                        $('#uxid_val').val("");
+                        $('#nama_text').val("");
+                        $('#product_pic').attr("alt", "");
+                        $('#product_pic').attr("src", "");
+                        M.textareaAutoResize($('#picture_text'));
+                        M.textareaAutoResize($('#details_text'));
+                        M.textareaAutoResize($('#nama_text')); 
+                        
+                    }
+            });
             
             return initModal();
         });
         
     });
+
+    function initModal(){            
+        modal1 = M.Modal.getInstance( $('#modal1'));
+        modal1.open();
+    }
 
     $('#editProduk').on('submit', function(event){
         event.preventDefault();
@@ -105,47 +145,10 @@ $(document).ready(function() {
 
     });
 
-    $('#modal1').modal({
-        'onOpenEnd': 
-            function(){   
-                $('#nama_text').val(selectedName);
-                M.textareaAutoResize($('#nama_text')); 
-                                 
-                if(selectedDesc != null){
-                         
-                     
-                    $('#picture_text').val(selectedDesc.picture);
-                    M.textareaAutoResize($('#picture_text'));
-                    $('#details_text').val(selectedDesc.details.trim());
-                    M.textareaAutoResize($('#details_text'));
-                    $('#product_pic').attr("alt", selectedDesc.picture);
-                    $('#product_pic').attr("src", selectedDesc.picture);
-                    $('.materialboxed').materialbox();
-                   
-                }
-               
-            },
-        'onCloseStart':
-            function(){
-            
-                $('#picture_text').val("");
-                $('#details_text').val("");
-                $('#uxid_val').val("");
-                $('#nama_text').val("");
-                $('#product_pic').attr("alt", "");
-                $('#product_pic').attr("src", "");
-                M.textareaAutoResize($('#picture_text'));
-                M.textareaAutoResize($('#details_text'));
-                M.textareaAutoResize($('#nama_text')); 
-                
-            }
-    });
+   
 
 
-    function initModal(){            
-        modal1 = M.Modal.getInstance( $('#modal1'));
-        modal1.open();
-    }
+   
 
     $('#closeModalBtn').on('click', function(){
         modal1.close();
