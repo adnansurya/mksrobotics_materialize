@@ -8,6 +8,15 @@ function loadInit(){
  
 }
 
+function loadPlugin(){
+  $('.sidenav').sidenav();
+  $('select').formSelect();
+  $('.modal').modal(); 
+  $(".dropdown-trigger").dropdown({
+    hover :true
+  });
+}
+
 function cekLogin(roles){
 
   auth.onAuthStateChanged(function(user) {
@@ -59,25 +68,27 @@ function logout(){
 
 function loginMenu(user){
 
-  // console.log(loggedUser.roles);
+ let path = window.location.pathname ;
+
   if(user){
     if(user.roles == 'admin'){
       $('#menuDiv').append(`
           <li><a class="dropdown-trigger" data-target="dropdown2"><i class="material-icons left">stars</i>Admin<i class="material-icons right">arrow_drop_down</i></a></li>                  
           <ul id="dropdown2" class="dropdown-content">    
-            <li><a href="/admin/product">Product</a></li>
+            <li class="pages"><a href="/admin/product">Product</a></li>
           </ul> 
       `);
       $('#nav-mobile').append(`
         <li><div class="divider"></div></li>
         <li><a class="subheader">Admin</a></li>
-        <li><a href="/admin/product"><i class="material-icons left">list_alt</i>List Produk</a></li>  
+        <li class="pages"><a href="/admin/product"><i class="material-icons left">list_alt</i>List Produk</a></li>  
       `);
-    }    
+    }
     $('#menuDiv').append(`
       <li><a class="dropdown-trigger" data-target="dropdown1"><i class="material-icons left">face</i>Hai, `+user.nickname+`  <i class="material-icons right">arrow_drop_down</i></a></li>                  
       <ul id="dropdown1" class="dropdown-content">
-        <li><a href="#!">Profil</a></li>            
+        <li class="pages"><a href="/admin">Dashboard</a></li>  
+        <li><a href="#">Profil</a></li>            
         <li class="divider"></li>
         <li><a href="#" onclick="logout()">Logout</a></li>
       </ul> 
@@ -89,16 +100,28 @@ function loginMenu(user){
     `);
     $('#nav-mobile').append(`
       <li><div class="divider"></div></li>
-      <li><a class="subheader">Akun</a></li>        
+      <li><a class="subheader">Akun</a></li>
+      <li class="pages"><a href="/admin"><i class="material-icons left">dashboard</i>Dashboard</a></li>          
       <li><a href="#"><i class="material-icons left">face</i>Profil</a></li>                  
       <li><a href="#" onclick="logout()"><i class="material-icons left">exit_to_app</i>Logout</a></li>
   `);
    
   }else{
    
-    
+   
    loginBtn();
   } 
+
+  $( ".pages" ).each(function( index ) {
+    let current_element = $( this ).find('a');
+    let page_href = current_element.attr('href');
+    if(path === page_href){
+      $( this ).addClass('active');
+    }
+
+  })
+  // console.log($('.pages > a').attr('href'));
+  
 }
 
 function loginBtn(){
@@ -113,14 +136,7 @@ function loginBtn(){
 }
 
 
-function loadPlugin(){
-  $('.sidenav').sidenav();
-  $('select').formSelect();
-  $('.modal').modal(); 
-  $(".dropdown-trigger").dropdown({
-    hover :true
-  });
-}
+
 
 function toast(pesan){
   M.toast({html: pesan});

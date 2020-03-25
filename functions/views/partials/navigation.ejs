@@ -29,7 +29,7 @@
           <% } else {%>
             <li><a href="#"><i class="material-icons left">work</i>Project</a></li>
           <% } %>    
-        </li>       
+           
         
       </ul>
 
@@ -37,7 +37,6 @@
         
         <li><div class="user-view" id="mobileDiv">
           <div class="background blue">
-            <!-- <img src="img/mksrobotics_logo_long.jpg"> -->
           </div>                   
          
         </div></li>
@@ -61,20 +60,7 @@
         <% } else {%>
           <li><a href="#"><i class="material-icons left">work</i>Project</a></li>
         <% } %>
-        
-       
-        <% if (isLogin) { %>  
-          <% if (isLogin.roles === 'admin') { %>
-            <li><div class="divider"></div></li>
-            <li><a class="subheader">Admin</a></li>
-            <li><a href="/admin/product"><i class="material-icons left">list_alt</i>List Produk</a></li>   
-  
-          <% } %>
-          <li><div class="divider"></div></li>
-          <li><a class="subheader">Akun</a></li>        
-          <li><a href="#"><i class="material-icons left">face</i>Profil</a></li>                  
-          <li><a href="#" class="logoutBtn"><i class="material-icons left">exit_to_app</i>Logout</a></li>
-        <% } %>         
+                       
       </ul>
       <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       
