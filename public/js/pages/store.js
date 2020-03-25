@@ -2,6 +2,7 @@
 
 $( document ).ready(function() {
   loadInit();
+  cekLogin('all');
   let totalProduct, totalPage, lastUpdated;
   let category = 'SEMUA';
   let currentPage = 1;
@@ -9,7 +10,7 @@ $( document ).ready(function() {
   let search_query = "";
 
  
-  const db = firebase.database();
+
   db.ref('category').once('value').then(function(snapshot){
     $('.categoryDiv').append(
       `<p style="margin-top: 5px;margin-bottom: 5px;">
@@ -147,7 +148,7 @@ $( document ).ready(function() {
        
         if(allDesc[data.uxid] == null || allDesc[data.uxid] == undefined){
           desc = {
-                  picture :'/static/img/logo.png',
+                  picture :'/img/logo.png',
                   details : 'Belum Tersedia'
                 } 
         }else{

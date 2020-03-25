@@ -1,5 +1,10 @@
-$( document ).ready(function() {
+$(document).ready(function() {
+    
     loadInit();
+    cekLogin(['customer', 'admin']);
+
+
+   
  
 
 });

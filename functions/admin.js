@@ -3,7 +3,7 @@ var router = express.Router();
 const web_name = 'Makassar Robotics';
 
 var path = require('path');
-let db_admin;
+// let db_admin;
 
 router.use('/static', express.static(path.join(__dirname, '../public')));
 
@@ -41,23 +41,20 @@ let log_admin = function(req, res, next) {
 
 
 
-router.get('/', logger, (req,res) => {
+router.get('/', (req,res) => {
     // console.log("LOGGED :"  + req.session.uid);
         
     res.render('pages/admin', {page : 'admin', web_name : web_name, isLogin : req.session.user});    
 });
 
-router.get('/product', log_admin, (req,res) => {
+router.get('/product', (req,res) => {
   // console.log("LOGGED :"  + req.session.uid);
       
   res.render('pages/product', {page : 'product', web_name : web_name, isLogin : req.session.user});    
 });
 
-router.get('/product', log_admin, (req,res) => {
-  res.render('pages/product', {page : 'product', web_name : web_name, isLogin : req.session.user});    
-});
 
-router.post('/edit_product',log_admin, (req,res) =>{
+router.post('/edit_product', (req,res) =>{
   let data = req.body;
   console.log(data);
   
@@ -75,12 +72,12 @@ router.post('/edit_product',log_admin, (req,res) =>{
 
 
 
-// module.exports = router;
-module.exports = function(db){
-  db_admin = db;
-  // do as you wish
-  // this runs in background, not on each
-  // request
+module.exports = router;
+// module.exports = function(db){
+//   db_admin = db;
+//   // do as you wish
+//   // this runs in background, not on each
+//   // request
 
-  return router;
-}
+//   return router;
+// }

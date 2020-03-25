@@ -54,11 +54,9 @@ app.get('/project', (req,res) => {
 app.get('/login', (req,res) => {
     // console.log('LOGIN : ' + req.session.logged_name);
     
-    if(req.session.user){
-        res.redirect('/admin');
-    }else{
-        res.render('pages/login', {page : 'login', web_name : web_name, isLogin : req.session.user});    
-    }
+   
+    res.render('pages/login', {page : 'login', web_name : web_name});    
+   
     
 });
 
@@ -171,7 +169,7 @@ app.get('/api/all_product', function(req, res){
 
 
 
-const admin = require('./admin.js')(db);
+const admin = require('./admin.js');
 
 
 app.use('/admin', admin);

@@ -9,7 +9,7 @@ $(document).ready(function() {
     let selectedId, selectedName;
     const db = firebase.database();
     let table = $('#product_table').DataTable( {
-        "ajax": "http://localhost:5000/api/all_product",
+        "ajax": "https://mksrobotics.web.app/api/all_product",
         "columns": [
             { "data": "name" },
             { "data": "category" },
