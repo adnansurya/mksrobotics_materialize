@@ -130,10 +130,16 @@ function loginBtn(){
     <li><a href="/login"><i class="material-icons left">account_circle</i>Login</a></li> 
   `);
   $('#mobileDiv').append(`
-    <a href="/login"><img class="circle white" src="/img/logo.png"></a>
-    <a href="/login"><span class="white-text name">Makassar Robotics</span></a>      
-    <a href="/login"><span class="white-text email"><b>Login</b></span></a>
-  `);       
+    <a href="/"><img class="circle white" src="/img/logo.png"></a>
+    <a href="/"><span class="white-text name">Makassar Robotics</span></a>   
+    <a href="/"><span class="white-text email"></span></a>        
+  `); 
+  
+  $('#nav-mobile').append(`
+  <li><div class="divider"></div></li>
+  <li><a class="subheader">Akun</a></li>
+  <li><a href="/login"><i class="material-icons left">perm_identity</i>Login</a></li> 
+  `); 
 }
 
 
