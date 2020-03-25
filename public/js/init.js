@@ -116,7 +116,7 @@ function loginBtn(){
 function loadPlugin(){
   $('.sidenav').sidenav();
   $('select').formSelect();
-  // $('.modal').modal(); 
+  $('.modal').modal(); 
   $(".dropdown-trigger").dropdown({
     hover :true
   });
