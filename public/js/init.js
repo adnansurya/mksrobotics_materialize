@@ -117,6 +117,7 @@ function loginMenu(user){
     let page_href = current_element.attr('href');
     if(path === page_href){
       $( this ).addClass('active');
+      current_element.attr('href', '#');
     }
 
   })
