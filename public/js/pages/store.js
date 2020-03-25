@@ -293,10 +293,13 @@ $( document ).ready(function() {
     'onOpenStart': 
         function(){  
          
-        
+          let details = selectedDetails.trim();
+          let new_details = details.replace(new RegExp('\r?\n','g'), '<br>');
           $('#product_text').text(selectedName);
-          $('#details_text').val(selectedDetails);
-          M.textareaAutoResize($('#details_text'));
+          $('#details_text').html(new_details);
+          // M.textareaAutoResize($('#details_text'));
+          // $('#details_text').prop("disabled", true);
+        
         }
   });
 

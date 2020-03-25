@@ -95,7 +95,7 @@ $(document).ready(function() {
 
         db.ref('description/'+ values.uxid).set({
             picture : values.picture,
-            details : values.details
+            details : values.details.trim()
         }).catch(function(error){
             toast(error.message);
         }).then(function(){
@@ -116,7 +116,7 @@ $(document).ready(function() {
                      
                     $('#picture_text').val(selectedDesc.picture);
                     M.textareaAutoResize($('#picture_text'));
-                    $('#details_text').val(selectedDesc.details);
+                    $('#details_text').val(selectedDesc.details.trim());
                     M.textareaAutoResize($('#details_text'));
                     $('#product_pic').attr("alt", selectedDesc.picture);
                     $('#product_pic').attr("src", selectedDesc.picture);
