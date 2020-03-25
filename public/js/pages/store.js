@@ -2,7 +2,7 @@
 
 $( document ).ready(function() {
   loadInit();
-  cekLogin('all');
+  cekLogin(['all']);
   let totalProduct, totalPage, lastUpdated;
   let category = 'SEMUA';
   let currentPage = 1;

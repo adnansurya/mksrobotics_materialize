@@ -6,8 +6,8 @@ $(document).ready(function(){
     auth.onAuthStateChanged(function(user) {
         if (user) {
           // User is signed in.
-        //   location.href = '/admin';
-        console.log(user);
+          location.href = '/admin';
+        // console.log(user);
         
           // ...
         } else {

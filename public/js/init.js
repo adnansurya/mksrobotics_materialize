@@ -1,4 +1,4 @@
-let loggedUser = null;
+
 
 var auth;
 var db;
@@ -11,24 +11,42 @@ function loadInit(){
 function cekLogin(roles){
 
   auth.onAuthStateChanged(function(user) {
+    let loggedUser = null;
     if (user) {
+  
+    
   
      db.ref('users/'+ user.uid).once('value').then(function(snapshot){
         loggedUser = snapshot.val();
-        if(roles.indexOf(loggedUser.roles) == -1 && roles.indexOf('all') == -1 ){
+        
+        if(roles.indexOf(loggedUser.roles) == -1 &&  roles.indexOf('all') == -1){
           location.href = '/login';
         }
+
+        return loginMenu(loggedUser);
        
-      }).then(loginMenu).then(loadPlugin);
+      }).then(function(){
+        return loadPlugin();
+      });
+    }else{
+      
+      if( roles.indexOf('all') == -1 ){
+        location.href = '/login';
+      }else{
+        loginBtn();
+      }
+     
     } 
        
   });
+ 
+  
 }
 
 function logout(){
   auth.signOut().then(function() {
     // delayRedirect('/login', 1);
-    console.log(auth.currentUser);
+    return delayRedirect('/login', 1);
     
   }).catch(function(error) {
    toast(error.message)
@@ -38,16 +56,15 @@ function logout(){
   
 }
 
-// $('#logoutBtn').on('click', function(){
-//   logout();
-// });
 
 
-function loginMenu(){
+
+function loginMenu(user){
+
 
   // console.log(loggedUser.roles);
-  if(loggedUser){
-    if(loggedUser.roles == 'admin'){
+  if(user){
+    if(user.roles == 'admin'){
       $('#menuDiv').append(`
           <li><a class="dropdown-trigger" data-target="dropdown2"><i class="material-icons left">stars</i>Admin<i class="material-icons right">arrow_drop_down</i></a></li>                  
           <ul id="dropdown2" class="dropdown-content">    
@@ -56,21 +73,21 @@ function loginMenu(){
       `);
     }    
     $('#menuDiv').append(`
-      <li><a class="dropdown-trigger" data-target="dropdown1"><i class="material-icons left">face</i>Hai, `+loggedUser.nickname+`  <i class="material-icons right">arrow_drop_down</i></a></li>                  
+      <li><a class="dropdown-trigger" data-target="dropdown1"><i class="material-icons left">face</i>Hai, `+user.nickname+`  <i class="material-icons right">arrow_drop_down</i></a></li>                  
       <ul id="dropdown1" class="dropdown-content">
         <li><a href="#!">Profil</a></li>            
         <li class="divider"></li>
-        <li><a href="/logout">Logout</a></li>
+        <li><a href="#" onclick="logout()">Logout</a></li>
       </ul> 
     `);
   }else{
-    $('#menuDiv').append(`
-      <li><a href="/login"><i class="material-icons left">account_circle</i>Login</a></li> 
-    `);
+   
+    
+   loginBtn();
   } 
 }
 
-function loadMenu(){
+function loginBtn(){
   $('#menuDiv').append(`
     <li><a href="/login"><i class="material-icons left">account_circle</i>Login</a></li> 
   `);
@@ -80,7 +97,7 @@ function loadMenu(){
 function loadPlugin(){
   $('.sidenav').sidenav();
   $('select').formSelect();
-  $('.modal').modal(); 
+  // $('.modal').modal(); 
   $(".dropdown-trigger").dropdown({
     hover :true
   });
