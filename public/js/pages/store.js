@@ -5,6 +5,7 @@ $( document ).ready(function() {
   cekLogin(['all']);
   loadPlugin();
   let totalProduct, totalPage, lastUpdated;
+  let selectedId, selectedName, selectedDetails;
   let category = 'SEMUA';
   let currentPage = 1;
   let perPage = parseInt( $('#itemPerPage').val());
@@ -265,11 +266,15 @@ $( document ).ready(function() {
   
     if(!disableStatus){          
       loadProduct();
-    }   
+    }
+    
+    
     
   });
 
-  let selectedId, selectedName, selectedDetails;
+
+
+ 
   $('#productDiv').on('click','a', function(){  
     selectedId = $(this).attr('data-id');
     selectedName = $(this).attr('data-name');
@@ -280,28 +285,31 @@ $( document ).ready(function() {
     }else{
       if(allDesc[selectedId]['details'] != null && allDesc[selectedId]['details'] != undefined){
         selectedDetails = allDesc[selectedId]['details'];
-        console.log(selectedDetails);
       }else{
        selectedDetails = 'Belum ada keterangan'; 
       }
     }
+
+    $('#modal2').modal({
+      'onOpenStart': 
+          function(){  
+           
+            let details = selectedDetails.trim();
+  
+            
+            let new_details = details.replace(new RegExp('\r?\n','g'), '<br>');
+            $('#product_text').text(selectedName);
+            $('#details_text').html(new_details);
+            // M.textareaAutoResize($('#details_text'));
+            // $('#details_text').prop("disabled", true);
+          
+          }
+    });
   
     
   });
 
-  $('#modal2').modal({
-    'onOpenStart': 
-        function(){  
-         
-          let details = selectedDetails.trim();
-          let new_details = details.replace(new RegExp('\r?\n','g'), '<br>');
-          $('#product_text').text(selectedName);
-          $('#details_text').html(new_details);
-          // M.textareaAutoResize($('#details_text'));
-          // $('#details_text').prop("disabled", true);
-        
-        }
-  });
+  
 
 });
 

@@ -31,8 +31,7 @@ $(document).ready(function(){
         $.each($('#daftarForm').serializeArray(), function(i, field) {
             values[field.name] = field.value;
            
-        });
-        console.log(values);
+        });      
               
         auth.createUserWithEmailAndPassword(values.email_new, values.password_new).catch(function(error) {
           
