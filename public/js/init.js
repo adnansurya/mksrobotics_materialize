@@ -13,9 +13,7 @@ function cekLogin(roles){
   auth.onAuthStateChanged(function(user) {
     let loggedUser = null;
     if (user) {
-  
-    
-  
+        
      db.ref('users/'+ user.uid).once('value').then(function(snapshot){
         loggedUser = snapshot.val();
         
@@ -61,7 +59,6 @@ function logout(){
 
 function loginMenu(user){
 
-
   // console.log(loggedUser.roles);
   if(user){
     if(user.roles == 'admin'){
@@ -70,6 +67,11 @@ function loginMenu(user){
           <ul id="dropdown2" class="dropdown-content">    
             <li><a href="/admin/product">Product</a></li>
           </ul> 
+      `);
+      $('#nav-mobile').append(`
+        <li><div class="divider"></div></li>
+        <li><a class="subheader">Admin</a></li>
+        <li><a href="/admin/product"><i class="material-icons left">list_alt</i>List Produk</a></li>  
       `);
     }    
     $('#menuDiv').append(`
@@ -80,6 +82,18 @@ function loginMenu(user){
         <li><a href="#" onclick="logout()">Logout</a></li>
       </ul> 
     `);
+    $('#mobileDiv').append(`
+      <a href="#user"><img class="circle white" src="/img/logo.png"></a>      
+      <a href="#name"><span class="white-text name">`+ user.nama+` </span></a>
+      <a href="#email"><span class="white-text email">`+user.roles+` </span></a>
+    `);
+    $('#nav-mobile').append(`
+      <li><div class="divider"></div></li>
+      <li><a class="subheader">Akun</a></li>        
+      <li><a href="#"><i class="material-icons left">face</i>Profil</a></li>                  
+      <li><a href="#" onclick="logout()"><i class="material-icons left">exit_to_app</i>Logout</a></li>
+  `);
+   
   }else{
    
     
@@ -91,6 +105,11 @@ function loginBtn(){
   $('#menuDiv').append(`
     <li><a href="/login"><i class="material-icons left">account_circle</i>Login</a></li> 
   `);
+  $('#mobileDiv').append(`
+    <a href="/login"><img class="circle white" src="/img/logo.png"></a>
+    <a href="/login"><span class="white-text name">Makassar Robotics</span></a>      
+    <a href="/login"><span class="white-text email">Login</span></a>
+  `);       
 }
 
 

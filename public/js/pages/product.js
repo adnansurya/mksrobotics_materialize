@@ -12,8 +12,8 @@ $(document).ready(function() {
     let selectedDesc = null;
     let modal1;
     const db = firebase.database();
-    // let url = "http://localhost:5000/api/all_product";  //test
-    let url = "https://mksrobotics.web.app/api/all_product";  //deploy
+    let url = "http://localhost:5000/api/all_product";  //test
+    // let url = "https://mksrobotics.web.app/api/all_product";  //deploy
     let table = $('#product_table').DataTable( {
         
         "ajax" : url,

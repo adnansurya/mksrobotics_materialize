@@ -1,6 +1,6 @@
 $(document).ready(function() {
     
-    loadInit();
+    loadInit(); 
     cekLogin(['customer', 'admin']);
 
 

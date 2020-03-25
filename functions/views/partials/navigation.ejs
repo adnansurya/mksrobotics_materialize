@@ -35,20 +35,10 @@
 
       <ul id="nav-mobile" class="sidenav show-on-medium-and-down">
         
-        <li><div class="user-view">
+        <li><div class="user-view" id="mobileDiv">
           <div class="background blue">
             <!-- <img src="img/mksrobotics_logo_long.jpg"> -->
-          </div>
-          
-          <% if (isLogin) { %>    
-            <a href="#user"><img class="circle white" src="/img/logo.png"></a>      
-            <a href="#name"><span class="white-text name"><%= isLogin.nama %> </span></a>
-            <a href="#email"><span class="white-text email"><%= isLogin.roles.toUpperCase(); %> </span></a>
-          <% } else {%>
-            <a href="/login"><img class="circle white" src="/img/logo.png"></a>
-            <a href="/login"><span class="white-text name">Makassar Robotics</span></a>      
-            <a href="/login"><span class="white-text email">Login</span></a>                         
-          <% } %> 
+          </div>                   
          
         </div></li>
 

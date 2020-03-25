@@ -1,7 +1,8 @@
 
 
 $(document).ready(function(){  
-    loadInit();  
+    loadInit();
+    loadPlugin()  
 
     auth.onAuthStateChanged(function(user) {
         if (user) {
