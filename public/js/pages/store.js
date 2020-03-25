@@ -170,7 +170,7 @@ $( document ).ready(function() {
                    <p class="truncate">
                    `+ data.name+`
                    </p>
-                   <p>Rp.`+ data.sellPrice+`<small> / `+ data.unit+`</small></p>
+                   <p>`+ rupiah.format(data.sellPrice) +`<small> / `+ data.unit+`</small></p>
                    <p class="right-align">Stok :<b> `+data.stockAmount+`</b></p>  
                  </div>           
                </div>

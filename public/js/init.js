@@ -108,7 +108,7 @@ function loginBtn(){
   $('#mobileDiv').append(`
     <a href="/login"><img class="circle white" src="/img/logo.png"></a>
     <a href="/login"><span class="white-text name">Makassar Robotics</span></a>      
-    <a href="/login"><span class="white-text email">Login</span></a>
+    <a href="/login"><span class="white-text email"><b>Login</b></span></a>
   `);       
 }
 
