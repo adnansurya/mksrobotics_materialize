@@ -76,7 +76,7 @@ $( document ).ready(function() {
     return copy;
   }
 
-
+  let jsonProduct;
   function loadProduct(){
     
     perPage = parseInt($('#itemPerPage').val());
@@ -84,7 +84,8 @@ $( document ).ready(function() {
     
     $('#productLoad').removeClass('hide');
     $('#productDiv').empty();
-    let allSnap;
+    
+
     
     if(category === "SEMUA"){
       // $('#itemPerPage').parent().parent().closest('div').removeClass('hide');
@@ -97,33 +98,32 @@ $( document ).ready(function() {
       loadPagination(totalPage);
       let startItem = perPage * (currentPage-1)
       startItem = startItem.toString();
+
       
-      db.ref('product_data').orderByKey().startAt(startItem).limitToFirst(perPage).once('value').then(function(snapshot){    
-        allSnap = clone(snapshot.val());        
-        appendProduct(allSnap);            
-      });
+      $.get("/api/product_page/"+startItem+"/"+perPage, function(data, status){              
+        jsonProduct = JSON.parse(data).data;     
+        appendProduct(jsonProduct);
+      });      
+
     }else if(category === "SEARCH"){
-      db.ref('product_data').orderByChild('name').startAt(search_query).endAt(search_query+"\uf8ff").once("value").then(function(snapshot){    
-        allSnap = clone(snapshot.val());
-        console.log(allSnap);
-        if(allSnap != null){
-          appendProduct(allSnap);  
-        }else{
-          $('#productLoad').addClass('hide'); 
-        }
-                
-                 
+
+      $.get("/api/search_product/"+search_query, function(data, status){
+        jsonProduct = JSON.parse(data).data;     
+        appendProduct(jsonProduct);
       });
+
     }else{
-      // $('#itemPerPage').parent().parent().closest('div').addClass('hide');      
-      db.ref('product_data').orderByChild('category').equalTo(category).once('value').then(function(snapshot){    
-        allSnap = clone(snapshot.val());        
-        appendProduct(allSnap);
-      });
+      $.get("/api/filter_product/"+category.replace('/', '%2F'), function(data, status){             
+        jsonProduct = JSON.parse(data).data;     
+        appendProduct(jsonProduct);
+      });    
     }   
   }
-  let allDesc;
+  // let allDesc;
   function appendProduct(all){
+    console.log(jsonProduct);
+    
+    
     let startItem = 0;
     let endItem = 0;
     if(category !== 'SEMUA'){
@@ -138,34 +138,33 @@ $( document ).ready(function() {
       endItem = startItem + perPage - 1;
     }
     
-     db.ref('description').once('value').then(function(snapshot){        
-        allDesc = clone(snapshot.val());
+    //  db.ref('description').once('value').then(function(snapshot){        
+    //     allDesc = clone(snapshot.val());
 
-    }).then(function(){
+    // }).then(function(){
 
       Object.keys(all).some(function(value, index, _arr) {
         let data = all[value];
         if(category === 'SEMUA' || (category !== 'SEMUA' &&  index>= startItem)){
  
        
-        if(allDesc[data.uxid] == null || allDesc[data.uxid] == undefined){
-          desc = {
-                  picture :'/img/logo.png',
-                  details : 'Belum Tersedia'
-                } 
-        }else{
-          desc = allDesc[data.uxid];
+        if(data.picture == null || data.picture == undefined){
+          data.picture = '/img/logo.png'         
         }
+        if(data.details == null || data.details == undefined){
+          data.details = 'Belum Tersedia';
+        }
+         
            
            $('#productDiv').append(
              `<div class="col l3 m4 s6">
                <div class="card hoverable">
                  <div class="card-image grey">
                    <div class="valign-wrapper my-responsive-card">
-                    <img src="`+desc.picture+`" alt="`+data.name+`" class="responsive-img materialboxed" data-caption="`+data.name+`" style="padding: 10px;">
+                    <img src="`+data.picture+`" alt="`+data.name+`" class="responsive-img materialboxed" data-caption="`+data.name+`" style="padding: 10px;">
                    </div>
                   
-                   <a data-target="modal2" data-id="`+data.uxid+`" data-name="`+data.name+`" class="btn-floating halfway-fab waves-effect waves-light green modal-trigger my-details" style="right: 12px;"><i class="material-icons">subject</i></a>                                                           
+                   <a data-target="modal2" data-id="`+index+`" class="btn-floating halfway-fab waves-effect waves-light green modal-trigger my-details" style="right: 12px;"><i class="material-icons">subject</i></a>                                                           
                  </div>
                  <div class="card-content" style="padding: 10px; margin-top: 8px;">        
                    <p class="truncate">
@@ -187,12 +186,12 @@ $( document ).ready(function() {
        }
           
      });
-    }).then(function(){
+    // }).then(function(){
       $('.materialboxed').materialbox();
       $('.fixed-action-btn').floatingActionButton();
       $('#productLoad').addClass('hide'); 
       $('select').formSelect();
-    });
+    // });
     
    
     
@@ -278,17 +277,16 @@ $( document ).ready(function() {
  
   $('#productDiv').on('click','a', function(){  
     selectedId = $(this).attr('data-id');
-    selectedName = $(this).attr('data-name');
+    selectedName = jsonProduct[selectedId].name;    
+    
 
-    if(allDesc[selectedId] == null || allDesc[selectedId] == undefined){
+    if(jsonProduct[selectedId].details == null || jsonProduct[selectedId].details == undefined){
       selectedDetails = 'Belum ada keterangan';  
             
     }else{
-      if(allDesc[selectedId]['details'] != null && allDesc[selectedId]['details'] != undefined){
-        selectedDetails = allDesc[selectedId]['details'];
-      }else{
-       selectedDetails = 'Belum ada keterangan'; 
-      }
+      
+      selectedDetails = jsonProduct[selectedId].details; 
+     
     }
 
     $('#modal2').modal({
@@ -301,8 +299,6 @@ $( document ).ready(function() {
             let new_details = details.replace(new RegExp('\r?\n','g'), '<br>');
             $('#product_text').text(selectedName);
             $('#details_text').html(new_details);
-            // M.textareaAutoResize($('#details_text'));
-            // $('#details_text').prop("disabled", true);
           
           }
     });
