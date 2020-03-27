@@ -99,11 +99,27 @@ $( document ).ready(function() {
       let startItem = perPage * (currentPage-1)
       startItem = startItem.toString();
 
-      
-      $.get("/api/product_page/"+startItem+"/"+perPage, function(data, status){              
-        jsonProduct = JSON.parse(data).data;     
-        appendProduct(jsonProduct);
-      });      
+         
+      db.ref('product_data').orderByKey().startAt(startItem).limitToFirst(perPage).once('value').then(function(snapshot){         
+        product_data = snapshot.val();
+
+        return db.ref('description').once('value');    
+          
+      }).then(function(snapshot){ 
+          description = snapshot.val();
+          jsonProduct = [];
+          for(var product in product_data){
+              let oneProduct = product_data[product];
+              let uxid = oneProduct.uxid;
+
+              if(description[uxid]){
+                  oneProduct.details = description[uxid].details;
+                  oneProduct.picture = description[uxid].picture;                 
+              }
+              jsonProduct.push(oneProduct);                
+          }
+          appendProduct(jsonProduct);        
+      });  
 
     }else if(category === "SEARCH"){
 
@@ -113,15 +129,35 @@ $( document ).ready(function() {
       });
 
     }else{
-      $.get("/api/filter_product/"+category.replace('/', '%2F'), function(data, status){             
-        jsonProduct = JSON.parse(data).data;     
-        appendProduct(jsonProduct);
-      });    
-    }   
+       
+        let product_data, description;
+        db.ref('product_data').orderByChild('category').equalTo(category).once('value').then(function(snapshot){         
+            product_data = snapshot.val();
+
+            return db.ref('description').once('value');    
+            
+        }).then(function(snapshot){ 
+            description = snapshot.val();
+            jsonProduct = [];
+            for(var product in product_data){
+                let oneProduct = product_data[product];
+                let uxid = oneProduct.uxid;
+    
+                if(description[uxid]){
+                    oneProduct.details = description[uxid].details;
+                    oneProduct.picture = description[uxid].picture;                 
+                }
+                jsonProduct.push(oneProduct);                
+            }
+            appendProduct(jsonProduct);
+           
+
+        });        
+      }   
   }
-  // let allDesc;
+  
   function appendProduct(all){
-    console.log(jsonProduct);
+    
     
     
     let startItem = 0;
@@ -138,10 +174,7 @@ $( document ).ready(function() {
       endItem = startItem + perPage - 1;
     }
     
-    //  db.ref('description').once('value').then(function(snapshot){        
-    //     allDesc = clone(snapshot.val());
-
-    // }).then(function(){
+  
 
       Object.keys(all).some(function(value, index, _arr) {
         let data = all[value];
@@ -186,12 +219,12 @@ $( document ).ready(function() {
        }
           
      });
-    // }).then(function(){
+    
       $('.materialboxed').materialbox();
       $('.fixed-action-btn').floatingActionButton();
       $('#productLoad').addClass('hide'); 
       $('select').formSelect();
-    // });
+    
     
    
     

@@ -248,7 +248,7 @@ app.get('/api/product_page/:start/:limit', function(req, res){
 });
 
 app.get('/api/filter_product/:category', function(req, res){
-    let category = req.params.category;
+    let category = decodeURIComponent(req.params.category);
     var items = [];
     var products = {
         data : []
