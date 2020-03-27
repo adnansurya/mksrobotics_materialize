@@ -10,7 +10,8 @@
     },
     "product_data": {    
       ".read": "true",
-      ".write": "root.child('users').child(auth.uid).child('roles').val() === 'admin'"   
+      ".write": "root.child('users').child(auth.uid).child('roles').val() === 'admin'",
+      ".indexOn": "category"   
     }
   
   }
