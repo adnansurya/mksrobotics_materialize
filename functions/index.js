@@ -156,15 +156,124 @@ app.get('/api/all_product', function(req, res){
     var products = {
         data : []
     };
+    let product_data, description;
     
     db.ref('product_data').once('value').then(function(snapshot){
-        snapshot.forEach(function(childSnap){
-            products['data'].push(childSnap);
-        });
+        product_data = snapshot.val();
+
+        return db.ref('description').once('value');    
+        
+    }).then(function(snapshot){ 
+        description = snapshot.val();
+
+        for(var product in product_data){
+            let oneProduct = product_data[product];
+            let uxid = oneProduct.uxid;
+
+            if(description[uxid]){
+                oneProduct.details = description[uxid].details;
+                oneProduct.picture = description[uxid].picture;                 
+            }
+            products['data'].push(oneProduct);                
+        }
+    
+    
+        return res.send(JSON.stringify(products));    
+    });    
+});
+
+app.get('/api/search_product/:keyword', function(req, res){
+    let keyword = req.params.keyword.toLowerCase();
+    var items = [];
+    var products = {
+        data : []
+    };
+    let product_data, description;
+    db.ref('product_data').once('value').then(function(snapshot){
+        product_data = snapshot.val();
+
+        return db.ref('description').once('value');    
+    }).then(function(snapshot){ 
+        description = snapshot.val();
+
+       
+        for(var product in product_data){
+            let oneProduct = product_data[product];
+            let uxid = oneProduct.uxid;
+
+            if(description[uxid]){
+                oneProduct.details = description[uxid].details;
+                oneProduct.picture = description[uxid].picture;                 
+            }
+            if(oneProduct.name.toLowerCase().search(keyword) > -1){
+                products['data'].push(oneProduct);
+            }
+                            
+        }
       
         res.send(JSON.stringify(products));
     });
+});
+
+app.get('/api/product_page/:start/:limit', function(req, res){
+    let start = req.params.start;
+    let limit = parseInt(req.params.limit);
+    var items = [];
+    var products = {
+        data : []
+    };
     
+    let product_data, description;
+    db.ref('product_data').orderByKey().startAt(start).limitToFirst(limit).once('value').then(function(snapshot){  
+        
+        product_data = snapshot.val();
+
+        return db.ref('description').once('value');
+    }).then(function(snapshot){ 
+        description = snapshot.val();
+
+        for(var product in product_data){
+            let oneProduct = product_data[product];
+            let uxid = oneProduct.uxid;
+
+            if(description[uxid]){
+                oneProduct.details = description[uxid].details;
+                oneProduct.picture = description[uxid].picture;                 
+            }
+            products['data'].push(oneProduct);                
+        }
+    
+        return res.send(JSON.stringify(products));    
+    });
+});
+
+app.get('/api/filter_product/:category', function(req, res){
+    let category = req.params.category;
+    var items = [];
+    var products = {
+        data : []
+    };
+    let product_data, description;
+    db.ref('product_data').orderByChild('category').equalTo(category).once('value').then(function(snapshot){         
+            product_data = snapshot.val();
+
+            return db.ref('description').once('value');    
+            
+        }).then(function(snapshot){ 
+            description = snapshot.val();
+
+            for(var product in product_data){
+                let oneProduct = product_data[product];
+                let uxid = oneProduct.uxid;
+    
+                if(description[uxid]){
+                    oneProduct.details = description[uxid].details;
+                    oneProduct.picture = description[uxid].picture;                 
+                }
+                products['data'].push(oneProduct);                
+            }
+           return res.send(JSON.stringify(products));    
+    });    
 });
 
 
