@@ -81,7 +81,7 @@ function loginMenu(user){
       $('#nav-mobile').append(`
         <li><div class="divider"></div></li>
         <li><a class="subheader">Admin</a></li>
-        <li class="pages"><a href="/admin/product"><i class="material-icons left">list_alt</i>List Produk</a></li>  
+        <li class="pages"><a href="/admin/product"><i class="material-icons left">list_alt</i>Product</a></li>  
       `);
     }
     $('#menuDiv').append(`

@@ -7,6 +7,10 @@
         ".read": "$uid === auth.uid",
         ".write": "$uid === auth.uid"
       }
+    },
+    "product_data": {    
+      ".read": "true",
+      ".write": "root.child('users').child(auth.uid).child('roles').val() === 'admin'"   
     }
   
   }
