@@ -3,6 +3,7 @@ $(document).ready(function() {
     cekLogin(['admin']);
     loadPlugin();
     
+    
     $('#picture_text').val("");
     $('#details_text').val("");
     $('#product_pic').attr("alt", "");
@@ -12,64 +13,127 @@ $(document).ready(function() {
     let selectedDesc = null;
     let modal1;
     const db = firebase.database();
-    // let url = "http://localhost:5000/api/all_product";  //test
-    let url = "https://mksrobotics.web.app/api/all_product";  //deploy
-    let table = $('#product_table').DataTable( {
-        
-        "ajax" : url,
-        "columns": [
-            { "data": "name" },
-            { "data": "category" },
-            { 
-                data: 'basePrice',
-                render: function ( data, type, row ) {
-                    return rupiah.format(data);
-                } 
-            },                      
-            { 
-                data: 'sellPrice',
-                render: function ( data, type, row ) {
-                    return rupiah.format(data);
-                } 
-            },
-            { "data": "stockAmount" },
-            { "data": "unit" },
-            { "data": "code" },   
-            { "data": "type" },          
-            { "data": "uxid" },
-            { 
-                data: 'uxid',
-                render: function ( data, type, row ) {
-                    return `<button class="waves-effect waves-light btn btn-small" data-id="`+data+`" data-name="`+row['name']+`">Edit</button>`;
-                } 
-            }
-        ],
-        "columnDefs": [
-                     
-            {
-                "targets": [ 6 ],
-                "visible": false,
-                "searchable": true
-            },
-            {
-                "targets": [ 7 ],
-                "visible": false
-            },
-            {
-                "targets": [ 8 ],
-                "visible": false
-            }         
-        ],
-        responsive: true
-        
-    } );
+    let perPage = 10;
+    let table
    
-    $('select').formSelect();
+    let url = "http://localhost:5000/api/all_product";  //test
+    // let url = "https://mksrobotics.web.app/api/all_product";  //deploy
+
+    initTable(perPage);
+
+    function initTable(rowPerPage){
+        table = $('#product_table').DataTable( {
+        
+            "ajax" : url,
+            "columns": [
+                { "data": "name" },
+                { "data": "category" },
+                { 
+                    data: 'basePrice',
+                    render: function ( data, type, row ) {
+                        return rupiah.format(data);
+                    } 
+                },                      
+                { 
+                    data: 'sellPrice',
+                    render: function ( data, type, row ) {
+                        return rupiah.format(data);
+                    } 
+                },
+                { "data": "stockAmount" },
+                { "data": "unit" },
+                { "data": "code" },   
+                { "data": "type" },          
+                { "data": "uxid" },
+                { 
+                    data: 'uxid',
+                    render: function ( data, type, row ) {
+                        return `<button class="waves-effect waves-light btn btn-small" data-id="`+data+`" data-name="`+row['name']+`">Edit</button>`;
+                    } 
+                }
+            ],
+            "columnDefs": [
+                         
+                {
+                    "targets": [ 6 ],
+                    "visible": false,
+                    "searchable": true
+                },
+                {
+                    "targets": [ 7 ],
+                    "visible": false
+                },
+                {
+                    "targets": [ 8 ],
+                    "visible": false
+                }         
+            ],
+            responsive: true,
+            "dom": '<"row"<"#filtering.col s12 m6"><"col s12 m6"f>r>tip',
+            "pageLength": rowPerPage          
+            
+        } );
+    }
+
+    $("#filtering").append(`
+        <form id="filterDiv" action="#">
+            <div class="row">
+                <div class="col s12">
+                    <p "margin-bottom: 0px;margin-top: 0px;">Produk Per halaman</p>
+                </div>
+                <div class="col s3">
+                    <p>
+                        <label>
+                        <input name="group1" type="radio" value="10" checked />
+                        <span>10</span>
+                        </label>
+                    </p>
+                </div>
+                <div class="col s3">
+                    <p>
+                        <label>
+                        <input name="group1" type="radio" value="25" />
+                        <span>25</span>
+                        </label>
+                    </p>
+                </div>
+                <div class="col s3">
+                    <p>
+                        <label>
+                        <input name="group1" type="radio" value="50" />
+                        <span>50</span>
+                        </label>
+                    </p>
+                </div>
+                <div class="col s3">
+                    <p>
+                        <label>
+                        <input name="group1" type="radio" value="100" />
+                        <span>100</span>
+                        </label>
+                    </p>
+                </div>
+            </div>
+        </form>
+       
+    `);
+    
+
+    $('#filterDiv input').on('change', function() {
+        perPage =  parseInt($('input[name=group1]:checked', '#filterDiv').val());
+      
+        
+        $('#product_table').DataTable().page.len(perPage).draw();
+        
+        
+     });
+
+  
     
   
     table.on("click", "button", function () {            
         selectedId = $(this).attr('data-id');
-    selectedName = $(this).attr('data-name');       
+        selectedName = $(this).attr('data-name');       
         
    
         $('#uxid_val').val(selectedId);
@@ -111,7 +175,7 @@ $(document).ready(function() {
                         $('#product_pic').attr("src", "");
                         M.textareaAutoResize($('#picture_text'));
                         M.textareaAutoResize($('#details_text'));
-                        M.textareaAutoResize($('#nama_text')); 
+                        M.textareaAutoResize($('#nama_text'));                        
                         
                     }
             });
@@ -141,6 +205,7 @@ $(document).ready(function() {
         }).then(function(){
             toast('Data Produk berhasil diubah!');
             modal1.close();
+    
         });
 
     });
