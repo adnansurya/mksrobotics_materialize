@@ -16,8 +16,8 @@ $(document).ready(function() {
     let perPage = 10;
     let table
    
-    let url = "http://localhost:5000/api/all_product";  //test
-    // let url = "https://mksrobotics.web.app/api/all_product";  //deploy
+    let url = "/api/all_product";  
+    
 
     initTable(perPage);
 
