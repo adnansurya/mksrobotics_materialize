@@ -191,6 +191,7 @@ $( document ).ready(function() {
       $('.materialboxed').materialbox();
       $('.fixed-action-btn').floatingActionButton();
       $('#productLoad').addClass('hide'); 
+      $('select').formSelect();
     });
     
    
