@@ -44,14 +44,16 @@ let log_admin = function(req, res, next) {
 router.get('/', (req,res) => {
     // console.log("LOGGED :"  + req.session.uid);
         
-    res.render('pages/admin', {page : 'admin', web_name : web_name, isLogin : req.session.user});    
+    res.render('pages/admin', {page : 'admin', web_name : web_name});    
 });
 
 router.get('/product', (req,res) => {
   // console.log("LOGGED :"  + req.session.uid);
       
-  res.render('pages/product', {page : 'product', web_name : web_name, isLogin : req.session.user});    
+  res.render('pages/product', {page : 'product', web_name : web_name});    
 });
+
+
 
 
 router.post('/edit_product', (req,res) =>{
