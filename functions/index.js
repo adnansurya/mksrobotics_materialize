@@ -278,6 +278,28 @@ app.get('/api/filter_product/:category', function(req, res){
 
 
 
+app.get('/api/all_transit', function(req, res){
+    var items = [];
+    var products = {
+        data : []
+    };
+    let product_data, description;
+    
+    db.ref('transit').once('value').then(function(snapshot){
+        snapshot.forEach(function(childSnap){
+            let child = childSnap.val();
+            child.id = childSnap['key'];
+            products['data'].push(child);  
+
+        })
+
+        return res.send(JSON.stringify(products));   
+        
+    });    
+});
+
+
+
 const admin = require('./admin.js');
 
 

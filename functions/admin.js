@@ -54,6 +54,12 @@ router.get('/product', (req,res) => {
 });
 
 
+router.get('/transit', (req,res) => {
+  // console.log("LOGGED :"  + req.session.uid);
+      
+  res.render('pages/transit', {page : 'transit', web_name : web_name});    
+});
+
 
 
 router.post('/edit_product', (req,res) =>{

@@ -9,9 +9,9 @@ $(document).ready(function() {
     $('#product_pic').attr("alt", "");
     $('#product_pic').attr("src", "");
 
-    let selectedId, selectedName;
+    let selectedId, selectedName, selectedAct;
     let selectedDesc = null;
-    let modal1;
+    let modal1, modal2;
     const db = firebase.database();
     let perPage = 10;
     let table
@@ -48,7 +48,9 @@ $(document).ready(function() {
                 { 
                     data: 'uxid',
                     render: function ( data, type, row ) {
-                        return `<button class="waves-effect waves-light btn btn-small" data-id="`+data+`" data-name="`+row['name']+`">Edit</button>`;
+                        return `
+                        <button class="waves-effect waves-light btn btn-small" data-act="edit" data-id="`+data+`" data-name="`+row['name']+`">Edit</button><br>
+                        <button class="waves-effect waves-light btn orange darken-3 btn-small" data-act="transit" data-id="`+data+`" data-name="`+row['name']+`">Transit</button>`;
                     } 
                 }
             ],
@@ -133,55 +135,75 @@ $(document).ready(function() {
   
     table.on("click", "button", function () {            
         selectedId = $(this).attr('data-id');
-        selectedName = $(this).attr('data-name');       
+        selectedName = $(this).attr('data-name');
+        selectedAct = $(this).attr('data-act');       
         
-   
-        $('#uxid_val').val(selectedId);
-        $('#nama_text').val(selectedName);
-        M.textareaAutoResize($('#nama_text')); 
-        
-        
-        db.ref('description/'+selectedId).once('value').then(function(snapshot){
-            selectedDesc = snapshot.val();
+        if(selectedAct == "edit"){
+            $('#uxid_val').val(selectedId);
+            $('#nama_text').val(selectedName);
+    
+            
+            M.textareaAutoResize($('#nama_text')); 
             
             
-            $('#modal1').modal({
-                'onOpenStart': 
-                    function(){   
-                        
-                                         
-                        if(selectedDesc != null){
+            db.ref('description/'+selectedId).once('value').then(function(snapshot){
+                selectedDesc = snapshot.val();
+                
+                
+                $('#modal1').modal({
+                    'onOpenStart': 
+                        function(){   
+                            
+                                             
+                            if(selectedDesc != null){
+                                     
                                  
-                             
-                            $('#picture_text').val(selectedDesc.picture);
-                            M.textareaAutoResize($('#picture_text'));
-                            $('#details_text').val(selectedDesc.details.trim());
-                            M.textareaAutoResize($('#details_text'));
-                            $('#product_pic').attr("alt", selectedDesc.picture);
-                            $('#product_pic').attr("src", selectedDesc.picture);
-                            $('.materialboxed').materialbox();
+                                $('#picture_text').val(selectedDesc.picture);
+                                M.textareaAutoResize($('#picture_text'));
+                                $('#details_text').val(selectedDesc.details.trim());
+                                M.textareaAutoResize($('#details_text'));
+                                $('#product_pic').attr("alt", selectedDesc.picture);
+                                $('#product_pic').attr("src", selectedDesc.picture);
+                                $('.materialboxed').materialbox();
+                               
+                            }
                            
+                        },
+                    'onCloseStart':
+                        function(){
+                        
+                            $('#picture_text').val("");
+                            $('#details_text').val("");
+                            $('#uxid_val').val("");
+                            $('#nama_text').val("");
+                            $('#product_pic').attr("alt", "");
+                            $('#product_pic').attr("src", "");
+                            M.textareaAutoResize($('#picture_text'));
+                            M.textareaAutoResize($('#details_text'));
+                            M.textareaAutoResize($('#nama_text'));                        
+                            
                         }
-                       
-                    },
+                });
+                
+                return initModal();
+            });
+        }else if(selectedAct == "transit"){
+             
+            $('#modal2').modal({               
                 'onCloseStart':
                     function(){
-                    
-                        $('#picture_text').val("");
-                        $('#details_text').val("");
-                        $('#uxid_val').val("");
-                        $('#nama_text').val("");
-                        $('#product_pic').attr("alt", "");
-                        $('#product_pic').attr("src", "");
-                        M.textareaAutoResize($('#picture_text'));
-                        M.textareaAutoResize($('#details_text'));
-                        M.textareaAutoResize($('#nama_text'));                        
+                        $('#nama_produk_text').val("");
+                        $('#uxid_transit').val("");
+                        $('#jumlah_text').val("");                     
+                }
+            });   
                         
-                    }
-            });
-            
-            return initModal();
-        });
+            $('#nama_produk_text').val(selectedName);
+            $('#uxid_transit').val(selectedId);
+            modal2 = M.Modal.getInstance( $('#modal2'));
+            modal2.open();
+        }
+       
         
     });
 
@@ -210,6 +232,28 @@ $(document).ready(function() {
 
     });
 
+    $('#transitProduk').on('submit', function(event){
+        event.preventDefault();
+        var values = {};
+        $.each($('#transitProduk').serializeArray(), function(i, field) {
+            values[field.name] = field.value;
+        });
+
+        // var newPostKey = db.ref('transit').push().key;
+
+        db.ref('transit').push({
+            uxid : values.uxid,
+            nama : values.nama_produk,
+            jumlah : values.jumlah
+        }).catch(function(error){
+            toast(error.message);
+        }).then(function(){
+            toast('Produk Transit berhasil ditambah!');
+            modal2.close();    
+        });
+
+    });
+
    
 
 
@@ -217,6 +261,11 @@ $(document).ready(function() {
 
     $('#closeModalBtn').on('click', function(){
         modal1.close();
+       
+    });
+    $('#closeModalBtn2').on('click', function(){
+        modal2.close();
+       
     });
    
   

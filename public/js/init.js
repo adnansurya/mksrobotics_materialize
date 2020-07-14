@@ -76,14 +76,14 @@ function loginMenu(user){
           <li><a class="dropdown-trigger" data-target="dropdown2"><i class="material-icons left">stars</i>Admin<i class="material-icons right">arrow_drop_down</i></a></li>                  
           <ul id="dropdown2" class="dropdown-content">    
             <li class="pages"><a href="/admin/product">Product</a></li>
-            <li class="pages"><a href="/admin/restock">Restock</a></li>
+            <li class="pages"><a href="/admin/transit">Transit</a></li>
           </ul> 
       `);
       $('#nav-mobile').append(`
         <li><div class="divider"></div></li>
         <li><a class="subheader">Admin</a></li>
         <li class="pages"><a href="/admin/product"><i class="material-icons left">list_alt</i>Product</a></li>  
-        <li class="pages"><a href="/admin/restock"><i class="material-icons left">local_shipping</i>Restock</a></li>  
+        <li class="pages"><a href="/admin/transit"><i class="material-icons left">local_shipping</i>Transit</a></li>  
       `);
     }
     $('#menuDiv').append(`

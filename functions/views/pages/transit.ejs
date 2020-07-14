@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include ('../partials/head'); %>
+  <title> <%= page.toUpperCase(); %> | <%= web_name %> </title>
+</head>
+<body>
+
+    <%- include ('../partials/firebase'); %>
+    
+    <%- include ('../partials/navigation'); %>
+    
+    <div class="container">
+        <div class="row">
+          <div class="hide-on-small-only">
+              <h4 class="blue-text text-darken-3">Transit</h4>      
+              <div class="divider"></div>
+          </div>
+          <table id="transit_table" class="display" width="100%">
+            <thead>
+              <tr>
+                  <th>ID</th>                  
+                  <th>Nama Produk</th>
+                  <th>UXID</th>
+                  <th>Jumlah</th>
+                  <th>Action</th>
+              </tr>
+            </thead>
+                
+          </table>
+        </div>
+        <div class="row">
+          <button id="addTransitBtn" class="waves-effect green waves-light btn"><i class="material-icons left">add</i>Tambah Produk</button>
+        </div>
+    </div>
+
+    <div id="modal2" class="modal">
+        
+      <div class="modal-content">
+          <div class="row">
+              <div class="col s12 m6 l12">
+                  <h4>Transit</h4>                                                         
+              </div>
+          </div>
+          <div class="row" style="margin-bottom: 0px;">
+              <form id="transitProduk" style="margin-top: 20px;" method="POST"> 
+                  <input type="hidden" name="uxid" id="uxid_transit">                   
+                  <div class="input-field col s12">
+                      <input type="text" name="nama_produk" id="nama_produk_text" placeholder="Masukkan Nama Produk">
+                      <label for="nama_produk_text">Nama Produk</label>
+                  </div>                                                              
+                  <div class="input-field col s12">
+                      <input type="text" name="jumlah" id="jumlah_text" placeholder="Masukkan Jumlah Produk">
+                      <label for="jumlah_text">Jumlah Produk</label>
+                  </div>                    
+                  <button id="editDescBtn" type="submit" class="btn blue right waves-effect waves-light">Simpan</button>
+              </form>
+                  <button id="closeModalBtn2" class="btn grey darken-1 right waves-effect waves-light" style="margin-right: 10px;">Batalkan</button>    
+                                  
+          </div>                
+      </div>
+  </div>
+
+    <%- include ('../partials/footer'); %>
+
+    <%- include ('../partials/init'); %>
+    <script src="/js/libs/datatables.js"></script>
+    <script src="/js/libs/dataTables.responsive.js"></script>
+    <script src="/js/pages/transit.js"></script>
+     
+</body>
